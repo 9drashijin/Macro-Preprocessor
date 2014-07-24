@@ -1,6 +1,7 @@
 #include "unity.h"
 #include "Definition.h"
 #include "StringObject.h"
+#include "Text.h"
 #include "ErrorCode.h"
 #include "CException.h"
 #include <string.h>
@@ -87,6 +88,13 @@ void test_isPreprocessor_should_throw_error(){
 	}
 }
 
+void test_strDuplicate(){
+  Definition *define;
+  String *defination = stringNew("#define MIN 5-7");
+  stringDuplicate(defination);
+  
+
+}
 
 
 

@@ -4,6 +4,9 @@
 #include "CException.h"
 #include <string.h>
 #include <stdio.h>
+#include "StringObject.h"
+#include "Text.h"
+
 
 Definition *addDefinition(String *name, String *content){
 	Definition *define = malloc(sizeof(Definition));
@@ -19,5 +22,18 @@ int isPreprocessor(char hash){
 		return 1;
 	else
 		Throw(ERROR_NOT_DEFINE);
-		printf("zxc");
+}
+
+String *stringDuplicate(String *str){
+
+  Definition *strDuplicate;
+  strDuplicate->name;
+  strDuplicate->content;
+  return (String *)strDuplicate;
+
+}
+Text *textSubstitude(Text *text, int relativeStart, int length, Text *subText){
+  
+  
+  
 }
