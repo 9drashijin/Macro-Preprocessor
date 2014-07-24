@@ -5,10 +5,11 @@
 
 typedef struct {
 	//TokenType type;
-	char name;
-	char content;
+	String name;
+	String content;
 }Definition;
 
-Definition *createDefinition(char *name, char *conetent);
+Definition *addDefinition(String *name, String *content);
+int isPreprocessor(char hash);
 
 #endif // Definition_H
