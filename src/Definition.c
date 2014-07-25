@@ -17,14 +17,17 @@ Definition *addDefinition(String *name, String *content){
 	return define;
 }
 
-int isPreprocessor(char hash){
-	if(hash == '#')
-		return 1;
-	else
-		Throw(ERROR_NOT_DEFINE);
-}
+// Text *isPreprocessors(Text *hash){
+	// if(hash == '#define')
+  
+  // Text *define = textNew("#define");
+	// if(strcmp(hash->string,define->string)==0)
+		// return 1;
+	// else
+		// Throw(ERROR_NOT_DEFINE);
+// }
 
-// String *stringDuplicate(String *str){
+// Text *textClone(String *str){
 
   // Definition *strDuplicate;
   // strDuplicate->name;

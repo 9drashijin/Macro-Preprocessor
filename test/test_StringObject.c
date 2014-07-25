@@ -1,5 +1,6 @@
 #include "unity.h"
 #include "StringObject.h"
+#include "Text.h"
 
 void setUp(void){}
 void tearDown(void){}
@@ -7,7 +8,7 @@ void tearDown(void){}
 void test_stringNew_should_create_a_new_string(void){
   String *str = stringNew("define");
   
-  TEST_ASSERT_EQUAL_STRING("define",str->text);
+  TEST_ASSERT_EQUAL_STRING("define",str->text->string);
 	TEST_ASSERT_EQUAL(0,str->start);
 	TEST_ASSERT_EQUAL(6,str->length);
 
@@ -18,10 +19,9 @@ void test_stringDelete_should_delete_the_string(void){
   
   stringDelete(str);
   
-  TEST_ASSERT_EQUAL_STRING(" ",str->text);
+  TEST_ASSERT_EQUAL_STRING(NULL,str->text);
 	TEST_ASSERT_EQUAL(0,str->start);
 	TEST_ASSERT_EQUAL(0,str->length);
-
 }
 
 ////////TRIM LEFT////////
@@ -122,7 +122,7 @@ void test_stringClone_should_clone_the_source_to_the_destination_of_the_new_stri
   String *strCopy;
   strCopy = stringClone(defination);
   
-  TEST_ASSERT_EQUAL_STRING("#define MIN 5-7",strCopy->text);
+  TEST_ASSERT_EQUAL_STRING("#define MIN 5-7",strCopy->text->string);
   TEST_ASSERT_EQUAL(0,strCopy->start);
   TEST_ASSERT_EQUAL(15,strCopy->length);
   
@@ -133,7 +133,7 @@ void test_stringDuplicate_should_duplicate_the_string_to_a_new_string(){
   String *strDuplicate;
   strDuplicate = stringDuplicate(defination);
   
-  TEST_ASSERT_EQUAL_STRING("#define MAX 5*8",strDuplicate->text);
+  TEST_ASSERT_EQUAL_STRING("#define MAX 5*8",strDuplicate->text->string);
   TEST_ASSERT_EQUAL(0,strDuplicate->start);
   TEST_ASSERT_EQUAL(15,strDuplicate->length);
 }

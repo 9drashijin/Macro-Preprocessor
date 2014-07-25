@@ -40,11 +40,11 @@ void test_addDefinition_should_add_the_string_to_the_name_and_the_content(void){
   // printName(define->name);
   // printContent(define->content);
   
-	TEST_ASSERT_EQUAL_STRING("ABC",define->name->text);
+	TEST_ASSERT_EQUAL_STRING("ABC",define->name->text->string);
 	TEST_ASSERT_EQUAL(0,define->name->start);
 	TEST_ASSERT_EQUAL(3,define->name->length);
   
-  TEST_ASSERT_EQUAL_STRING("2+B*D-6",define->content->text);
+  TEST_ASSERT_EQUAL_STRING("2+B*D-6",define->content->text->string);
 	TEST_ASSERT_EQUAL(0,define->content->start);
 	TEST_ASSERT_EQUAL(7,define->content->length);
 }
@@ -59,34 +59,35 @@ void test_addDefinition_should_add_another_string_to_the_name_and_the_content(vo
   // printName(define->name);
   // printContent(define->content);
   
-	TEST_ASSERT_EQUAL_STRING("MIN",define->name->text);
+	TEST_ASSERT_EQUAL_STRING("MIN",define->name->text->string);
 	TEST_ASSERT_EQUAL(0,define->name->start);
 	TEST_ASSERT_EQUAL(3,define->name->length);
   
-  TEST_ASSERT_EQUAL_STRING("C&&D|5",define->content->text);
+  TEST_ASSERT_EQUAL_STRING("C&&D|5",define->content->text->string);
 	TEST_ASSERT_EQUAL(0,define->content->start);
 	TEST_ASSERT_EQUAL(6,define->content->length);
 }
 
-void test_isPreprocessor_should_not_throw_error(){
-	CEXCEPTION_T e;
-	Try{
-		TEST_ASSERT_EQUAL(1,isPreprocessor('#'));
-	}
-	Catch(e){
-		TEST_ASSERT_EQUAL(ERROR_NOT_DEFINE,e);
-	}
-}
-void test_isPreprocessor_should_throw_error(){
-	CEXCEPTION_T e;
-	Try{
-		TEST_ASSERT_EQUAL(1,isPreprocessor('@'));
-		TEST_FAIL_MESSAGE("ERROR_NOT_DEFINE");
-	}
-	Catch(e){
-		TEST_ASSERT_EQUAL(ERROR_NOT_DEFINE,e);
-	}
-}
+// void test_isPreprocessor_should_not_throw_error(){
+	// CEXCEPTION_T e;
+  // Text *result = isPreprocessors("#define");
+	// Try{
+		// TEST_ASSERT_EQUAL(1,result->string);
+	// }
+	// Catch(e){
+		// TEST_ASSERT_EQUAL(ERROR_NOT_DEFINE,e);
+	// }
+// }
+// void test_isPreprocessor_should_throw_error(){
+	// CEXCEPTION_T e;
+	// Try{
+		// TEST_ASSERT_EQUAL(1,isPreprocessors('Xdefine'));
+		// TEST_FAIL_MESSAGE("ERROR_NOT_DEFINE");
+	// }
+	// Catch(e){
+		// TEST_ASSERT_EQUAL(ERROR_NOT_DEFINE,e);
+	// }
+// }
 
 // void test_strDuplicate(){
   // Definition *define;

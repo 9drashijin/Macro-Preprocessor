@@ -1,10 +1,11 @@
 #ifndef StringObject_H
 #define StringObject_H
 
+#include "Text.h"
 #define isSpace(ch) ( ch == ' ' || ch == '\t' )
 
 typedef struct String{
-	char *text;
+	Text *text;
 	int start;
 	int length;
 }String;

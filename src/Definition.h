@@ -12,9 +12,9 @@ typedef struct Definition{
 }Definition;
 
 Definition *addDefinition(String *name, String *content);
-int isPreprocessor(char hash);
+Text *isPreprocessors(Text *hash);
 void defineTest(String *define);
-// String *stringDuplicate(String *str);
+Text *textClone(String *str);
 Text *textSubstitude(Text *text, int relativeStart, int length, Text *subText);
 
 #endif // Definition_H
