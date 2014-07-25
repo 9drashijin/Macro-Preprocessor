@@ -36,7 +36,24 @@ Text *textClone(Text *text){
 
 Text *textSubstitude(Text *text, int relativeStart, int length, Text *subText){
   
+  int i = 0;
+  int j = strlen(text->string);
+  int replace = relativeStart + length;
+  int start = text->string[relativeStart];
+  int stop = text->string[length];
   
-  
-  
+  for(;i<=j;i++){
+    if(text->string[i] >= replace ){
+    printf("must IN\n");
+      for(start;start <= stop ; start++ ){
+        printf("must IN to replace\n");
+        
+        text->string[start] = subText->string[0];
+        
+        printf("txt %s\n", text->string[start]);
+        return text;
+        }
+    }
+    else break;
+  }
 }

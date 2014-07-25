@@ -13,7 +13,6 @@ String *stringNew(char *textString){
 	newString->length = strlen(newString->text->string);
 	
 	return newString;
-
 }
 
 String *stringDelete(String *textString){
@@ -24,7 +23,6 @@ String *stringDelete(String *textString){
   deletedString->length = 0;
   
   return deletedString;
- 
 }
 
 String *stringClone(String *str){

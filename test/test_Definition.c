@@ -109,7 +109,19 @@ void test_textClone_should_clone_the_text_to_a_new_place(){
 }
 
 void test_textSubstitude(){
-  Text *txt = textNew("2+3*MIN-6/8");
+  Text *text = textNew("2+3*MIN-6/8");
+  Text *MIN = textNew("(10**11)");
+  Text *txt;
+  
+  txt = textSubstitude(text,4,3,MIN);
+  
+  printf("text %s\n", text->string);
+  printf("MIN %s\n", MIN->string);
+  
+  // printf("txt %s\n", txt->string);
+  
+  TEST_ASSERT_EQUAL_STRING("2+3*MIN-6/8",text->string);
+  
   
   
 }
