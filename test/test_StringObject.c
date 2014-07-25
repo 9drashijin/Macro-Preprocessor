@@ -117,7 +117,7 @@ void test_stringCompare_should_compare_and_return_0_if_both_length_are_same_whil
 	TEST_ASSERT_EQUAL(0,compare);
 }
 
-void test_stringClone(){
+void test_stringClone_should_clone_the_source_to_the_destination_of_the_new_string(){
   String *defination = stringNew("#define MIN 5-7");
   String *strCopy;
   strCopy = stringClone(defination);
@@ -128,12 +128,12 @@ void test_stringClone(){
   
   
 }
-void test_stringDup(){
-  String *defination = stringNew("#define MIN 5-7");
+void test_stringDuplicate_should_duplicate_the_string_to_a_new_string(){
+  String *defination = stringNew("#define MAX 5*8");
   String *strDuplicate;
-  strDuplicate = stringClone(defination);
+  strDuplicate = stringDuplicate(defination);
   
-  TEST_ASSERT_EQUAL_STRING("#define MIN 5-7",strDuplicate->text);
+  TEST_ASSERT_EQUAL_STRING("#define MAX 5*8",strDuplicate->text);
   TEST_ASSERT_EQUAL(0,strDuplicate->start);
   TEST_ASSERT_EQUAL(15,strDuplicate->length);
 }

@@ -88,12 +88,12 @@ void test_isPreprocessor_should_throw_error(){
 	}
 }
 
-void test_strDuplicate(){
-  Definition *define;
-  String *defination = stringNew("#define MIN 5-7");
-  stringDuplicate(defination);
+// void test_strDuplicate(){
+  // Definition *define;
+  // String *defination = stringNew("#define MIN 5-7");
+  // stringDuplicate(defination);
   
-}
+// }
 
 void test_textSubstitude(){
   

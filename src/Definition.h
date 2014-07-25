@@ -14,7 +14,7 @@ typedef struct Definition{
 Definition *addDefinition(String *name, String *content);
 int isPreprocessor(char hash);
 void defineTest(String *define);
-String *stringDuplicate(String *str);
+// String *stringDuplicate(String *str);
 Text *textSubstitude(Text *text, int relativeStart, int length, Text *subText);
 
 #endif // Definition_H

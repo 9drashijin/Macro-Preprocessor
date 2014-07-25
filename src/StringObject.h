@@ -12,6 +12,7 @@ typedef struct String{
 String *stringNew(char *textString);
 String *stringDelete(String *textString);
 String *stringClone(String *str);
+String *stringDuplicate(String *str);
 void stringLeftTrim(String *string);
 void stringRightTrim(String *string);
 int stringCompare(String *string1, String *string2);

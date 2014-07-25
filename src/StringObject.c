@@ -39,7 +39,7 @@ String *stringClone(String *str){
   return rString;
 }
 
-String *stringDup(String *str){
+String *stringDuplicate(String *str){
   
   String *newString = malloc(sizeof(String));
   
