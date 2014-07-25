@@ -16,11 +16,11 @@ void test_stringNew_should_create_a_new_string(void){
 void test_stringDelete_should_delete_the_string(void){
   String *str = stringNew("define");
   
-  // stringDelete(str);
+  stringDelete(str);
   
-  // TEST_ASSERT_EQUAL_STRING(" ",str->text);
-	// TEST_ASSERT_EQUAL(0,str->start);
-	// TEST_ASSERT_EQUAL(0,str->length);
+  TEST_ASSERT_EQUAL_STRING(" ",str->text);
+	TEST_ASSERT_EQUAL(0,str->start);
+	TEST_ASSERT_EQUAL(0,str->length);
 
 }
 

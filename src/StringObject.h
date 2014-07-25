@@ -10,7 +10,7 @@ typedef struct String{
 }String;
 
 String *stringNew(char *textString);
-String *stringDelete(char *textString);
+String *stringDelete(String *textString);
 void stringLeftTrim(String *string);
 void stringRightTrim(String *string);
 int stringCompare(String *string1, String *string2);

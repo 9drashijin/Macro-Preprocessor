@@ -11,8 +11,8 @@
 Definition *addDefinition(String *name, String *content){
 	Definition *define = malloc(sizeof(Definition));
 	
-	define->name = *name;
-	define->content = *content;
+	define->name = name;
+	define->content = content;
 	
 	return define;
 }
@@ -29,10 +29,12 @@ String *stringDuplicate(String *str){
   Definition *strDuplicate;
   strDuplicate->name;
   strDuplicate->content;
+  
   return (String *)strDuplicate;
 
 }
 Text *textSubstitude(Text *text, int relativeStart, int length, Text *subText){
+  
   
   
   

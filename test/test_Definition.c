@@ -1,7 +1,7 @@
 #include "unity.h"
 #include "Definition.h"
-#include "StringObject.h"
 #include "Text.h"
+#include "StringObject.h"
 #include "ErrorCode.h"
 #include "CException.h"
 #include <string.h>
@@ -16,18 +16,18 @@ void printName(String *str){
   // define = str;
   
   printf("======name====== \n");
-  printf("text %s \n",define->name.text);
-  printf("start %d \n",define->name.start);
-  printf("length %d \n\n",define->name.length);
+  printf("text %s \n",define->name->text);
+  printf("start %d \n",define->name->start);
+  printf("length %d \n\n",define->name->length);
 }
 void printContent(String *str){
   Definition *define;
   // define = str;
   
   printf("=====content===== \n");
-  printf("text %s \n",define->content.text);
-  printf("start %d \n",define->content.start);
-  printf("length %d \n",define->content.length);
+  printf("text %s \n",define->content->text);
+  printf("start %d \n",define->content->start);
+  printf("length %d \n",define->content->length);
 }
 
 void test_addDefinition_should_add_the_string_to_the_name_and_the_content(void){
@@ -37,16 +37,16 @@ void test_addDefinition_should_add_the_string_to_the_name_and_the_content(void){
  
   define = addDefinition(defineName,defineContent);
   
-  // printName(define);
-  // printContent(define);
+  // printName(define->name);
+  // printContent(define->content);
   
-	TEST_ASSERT_EQUAL_STRING("ABC",define->name.text);
-	TEST_ASSERT_EQUAL(0,define->name.start);
-	TEST_ASSERT_EQUAL(3,define->name.length);
+	TEST_ASSERT_EQUAL_STRING("ABC",define->name->text);
+	TEST_ASSERT_EQUAL(0,define->name->start);
+	TEST_ASSERT_EQUAL(3,define->name->length);
   
-  TEST_ASSERT_EQUAL_STRING("2+B*D-6",define->content.text);
-	TEST_ASSERT_EQUAL(0,define->content.start);
-	TEST_ASSERT_EQUAL(7,define->content.length);
+  TEST_ASSERT_EQUAL_STRING("2+B*D-6",define->content->text);
+	TEST_ASSERT_EQUAL(0,define->content->start);
+	TEST_ASSERT_EQUAL(7,define->content->length);
 }
 
 void test_addDefinition_should_add_another_string_to_the_name_and_the_content(void){
@@ -56,16 +56,16 @@ void test_addDefinition_should_add_another_string_to_the_name_and_the_content(vo
  
   define = addDefinition(defineName,defineContent);
   
-  // printName(define);
-  // printContent(define);
+  printName(define->name);
+  printContent(define->content);
   
-	TEST_ASSERT_EQUAL_STRING("MIN",define->name.text);
-	TEST_ASSERT_EQUAL(0,define->name.start);
-	TEST_ASSERT_EQUAL(3,define->name.length);
+	TEST_ASSERT_EQUAL_STRING("MIN",define->name->text);
+	TEST_ASSERT_EQUAL(0,define->name->start);
+	TEST_ASSERT_EQUAL(3,define->name->length);
   
-  TEST_ASSERT_EQUAL_STRING("C&&D|5",define->content.text);
-	TEST_ASSERT_EQUAL(0,define->content.start);
-	TEST_ASSERT_EQUAL(6,define->content.length);
+  TEST_ASSERT_EQUAL_STRING("C&&D|5",define->content->text);
+	TEST_ASSERT_EQUAL(0,define->content->start);
+	TEST_ASSERT_EQUAL(6,define->content->length);
 }
 
 void test_isPreprocessor_should_not_throw_error(){
@@ -95,6 +95,11 @@ void test_strDuplicate(){
   
 
 }
+
+// void test_textSubstitude(){
+  // Text str = {.string = "123A"};
+  
+// }
 
 
 

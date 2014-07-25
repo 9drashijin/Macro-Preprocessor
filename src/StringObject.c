@@ -6,7 +6,9 @@
 String *stringNew(char *textString){
 
 	String *newString = malloc(sizeof(String));
-	
+	// char *text = malloc(sizeof(strlen+1));
+  // strcpy(textString,newString);
+  
 	newString->text = textString;
 	newString->start = 0;
 	newString->length = strlen(newString->text);
@@ -15,7 +17,7 @@ String *stringNew(char *textString){
 
 }
 
-String *stringDelete(char *textString){
+String *stringDelete(String *textString){
 
   String *deletedString;
   deletedString = (String *)textString;

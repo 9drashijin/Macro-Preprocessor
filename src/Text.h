@@ -3,7 +3,7 @@
 
 typedef struct {
 	// int reference;
-	// char string[0];
+	char string[100];
 }Text;
 
 #endif // Text_H

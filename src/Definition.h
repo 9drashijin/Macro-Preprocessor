@@ -3,11 +3,12 @@
 
 #include "StringObject.h"
 #include "Text.h"
+#include "Token.h"
 
-typedef struct {
-	//TokenType type;
-	String name;
-	String content;
+typedef struct Definition{
+	TokenType type;
+	String *name;
+	String *content;
 }Definition;
 
 Definition *addDefinition(String *name, String *content);
