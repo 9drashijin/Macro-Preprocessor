@@ -12,7 +12,7 @@ typedef struct Definition{
 }Definition;
 
 Definition *addDefinition(String *name, String *content);
-Text *isPreprocessors(Text *hash);
+int isPreprocessors(Text *hash);
 void defineTest(String *define);
 Text *textClone(String *str);
 Text *textSubstitude(Text *text, int relativeStart, int length, Text *subText);

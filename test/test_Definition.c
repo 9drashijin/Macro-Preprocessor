@@ -68,33 +68,33 @@ void test_addDefinition_should_add_another_string_to_the_name_and_the_content(vo
 	TEST_ASSERT_EQUAL(6,define->content->length);
 }
 
-// void test_isPreprocessor_should_not_throw_error(){
-	// CEXCEPTION_T e;
-  // Text *result = isPreprocessors("#define");
-	// Try{
-		// TEST_ASSERT_EQUAL(1,result->string);
-	// }
-	// Catch(e){
-		// TEST_ASSERT_EQUAL(ERROR_NOT_DEFINE,e);
-	// }
-// }
-// void test_isPreprocessor_should_throw_error(){
-	// CEXCEPTION_T e;
-	// Try{
-		// TEST_ASSERT_EQUAL(1,isPreprocessors('Xdefine'));
-		// TEST_FAIL_MESSAGE("ERROR_NOT_DEFINE");
-	// }
-	// Catch(e){
-		// TEST_ASSERT_EQUAL(ERROR_NOT_DEFINE,e);
-	// }
-// }
+void test_isPreprocessor_should_not_throw_error(){
+	CEXCEPTION_T e;
+  Text *define = textNew("#define");
+  int result;
+	Try{
+    result = isPreprocessors(define);
+		TEST_ASSERT_EQUAL(1,result);
+	}
+	Catch(e){
+		TEST_ASSERT_EQUAL(ERROR_NOT_DEFINE,e);
+    TEST_FAIL_MESSAGE("ERROR_NOT_DEFINE");
+	}
+}
 
-// void test_strDuplicate(){
-  // Definition *define;
-  // String *defination = stringNew("#define MIN 5-7");
-  // stringDuplicate(defination);
-  
-// }
+void test_isPreprocessor_should_throw_error(){
+	CEXCEPTION_T e;
+  Text *define = textNew("#zdefine");
+  int result;
+	Try{
+    result = isPreprocessors(define);
+		TEST_ASSERT_EQUAL(1,result);
+		TEST_FAIL_MESSAGE("ERROR_NOT_DEFINE");
+	}
+	Catch(e){
+		TEST_ASSERT_EQUAL(ERROR_NOT_DEFINE,e);
+	}
+}
 
 void test_textSubstitude(){
   

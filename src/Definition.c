@@ -17,15 +17,15 @@ Definition *addDefinition(String *name, String *content){
 	return define;
 }
 
-// Text *isPreprocessors(Text *hash){
+int isPreprocessors(Text *hash){
 	// if(hash == '#define')
   
-  // Text *define = textNew("#define");
-	// if(strcmp(hash->string,define->string)==0)
-		// return 1;
-	// else
-		// Throw(ERROR_NOT_DEFINE);
-// }
+  Text *define = textNew("#define");
+	if(strcmp(hash->string,define->string)==0)
+		return 1;
+	else
+		Throw(ERROR_NOT_DEFINE);
+}
 
 // Text *textClone(String *str){
 
