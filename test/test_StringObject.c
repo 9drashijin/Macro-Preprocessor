@@ -117,8 +117,26 @@ void test_stringCompare_should_compare_and_return_0_if_both_length_are_same_whil
 	TEST_ASSERT_EQUAL(0,compare);
 }
 
-
-
+void test_stringClone(){
+  String *defination = stringNew("#define MIN 5-7");
+  String *strCopy;
+  strCopy = stringClone(defination);
+  
+  TEST_ASSERT_EQUAL_STRING("#define MIN 5-7",strCopy->text);
+  TEST_ASSERT_EQUAL(0,strCopy->start);
+  TEST_ASSERT_EQUAL(15,strCopy->length);
+  
+  
+}
+void test_stringDup(){
+  String *defination = stringNew("#define MIN 5-7");
+  String *strDuplicate;
+  strDuplicate = stringClone(defination);
+  
+  TEST_ASSERT_EQUAL_STRING("#define MIN 5-7",strDuplicate->text);
+  TEST_ASSERT_EQUAL(0,strDuplicate->start);
+  TEST_ASSERT_EQUAL(15,strDuplicate->length);
+}
 
 
 

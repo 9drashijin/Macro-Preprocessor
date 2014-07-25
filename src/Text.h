@@ -2,8 +2,8 @@
 #define Text_H
 
 typedef struct {
-	// int reference;
-	char string[100];
+	int reference;
+	char string[0];
 }Text;
 
 #endif // Text_H

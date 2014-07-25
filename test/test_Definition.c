@@ -56,8 +56,8 @@ void test_addDefinition_should_add_another_string_to_the_name_and_the_content(vo
  
   define = addDefinition(defineName,defineContent);
   
-  printName(define->name);
-  printContent(define->content);
+  // printName(define->name);
+  // printContent(define->content);
   
 	TEST_ASSERT_EQUAL_STRING("MIN",define->name->text);
 	TEST_ASSERT_EQUAL(0,define->name->start);
@@ -93,13 +93,11 @@ void test_strDuplicate(){
   String *defination = stringNew("#define MIN 5-7");
   stringDuplicate(defination);
   
-
 }
 
-// void test_textSubstitude(){
-  // Text str = {.string = "123A"};
+void test_textSubstitude(){
   
-// }
+}
 
 
 

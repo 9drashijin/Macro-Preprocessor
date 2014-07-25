@@ -6,8 +6,6 @@
 String *stringNew(char *textString){
 
 	String *newString = malloc(sizeof(String));
-	// char *text = malloc(sizeof(strlen+1));
-  // strcpy(textString,newString);
   
 	newString->text = textString;
 	newString->start = 0;
@@ -26,6 +24,30 @@ String *stringDelete(String *textString){
   deletedString->length = 0;
   
   return deletedString;
+}
+
+String *stringClone(String *str){
+
+  char *newString = malloc(sizeof(strlen(str->text+1)));
+  String *rString = malloc(sizeof(String));
+  
+  strcpy(newString,str->text);
+  rString->text = newString;
+  rString->start = str->start;
+  rString->length = str->length;
+  
+  return rString;
+}
+
+String *stringDup(String *str){
+  
+  String *newString = malloc(sizeof(String));
+  
+	newString->text = strdup(str->text);;
+	newString->start = str->start;
+	newString->length = str->length;
+	
+	return newString;
 }
 
 void stringLeftTrim(String *string){
