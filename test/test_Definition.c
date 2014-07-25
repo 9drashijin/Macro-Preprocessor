@@ -96,7 +96,21 @@ void test_isPreprocessor_should_throw_error(){
 	}
 }
 
+void test_textClone_should_clone_the_text_to_a_new_place(){
+  Text *define = textNew("#define");
+  Text *clone;
+  
+  clone = textClone(define);
+  
+  TEST_ASSERT_EQUAL_STRING("#define",define->string);
+  TEST_ASSERT_EQUAL_STRING("#define",clone->string);
+  TEST_ASSERT_EQUAL(1,define->reference);
+  TEST_ASSERT_EQUAL(1,clone->reference);
+}
+
 void test_textSubstitude(){
+  Text *txt = textNew("2+3*MIN-6/8");
+  
   
 }
 

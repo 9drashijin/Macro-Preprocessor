@@ -18,8 +18,6 @@ Definition *addDefinition(String *name, String *content){
 }
 
 int isPreprocessors(Text *hash){
-	// if(hash == '#define')
-  
   Text *define = textNew("#define");
 	if(strcmp(hash->string,define->string)==0)
 		return 1;
@@ -27,15 +25,15 @@ int isPreprocessors(Text *hash){
 		Throw(ERROR_NOT_DEFINE);
 }
 
-// Text *textClone(String *str){
-
-  // Definition *strDuplicate;
-  // strDuplicate->name;
-  // strDuplicate->content;
+Text *textClone(Text *text){
+  Text *clonetxt = malloc(strlen(text->string)+4+1);
   
-  // return (String *)strDuplicate;
+	strcpy(clonetxt->string,text->string);
+	clonetxt->reference = 1;
+  
+	return clonetxt;
+}
 
-// }
 Text *textSubstitude(Text *text, int relativeStart, int length, Text *subText){
   
   
