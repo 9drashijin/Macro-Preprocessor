@@ -51,6 +51,7 @@ void test_textAssign_give_a_new_text_should_not_increament_the_reference(void){
 	TEST_ASSERT_EQUAL(0x80000000,text->reference);
 }
 
+/////TEXT DELETE/////
 void test_textDelete_should_delete_dynamic_text(void){
 	Text *text = textNew("define");
 

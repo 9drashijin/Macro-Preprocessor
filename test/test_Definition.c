@@ -1,6 +1,6 @@
 #include "unity.h"
-#include "Definition.h"
 #include "Text.h"
+#include "Definition.h"
 #include "StringObject.h"
 #include "ErrorCode.h"
 #include "CException.h"
@@ -108,25 +108,26 @@ void test_textClone_should_clone_the_text_to_a_new_place(){
   TEST_ASSERT_EQUAL(1,clone->reference);
 }
 
-void test_textSubstitude(){
-  Text *text = textNew("2+3*MIN-6/8");
+void test_textSubstitude_should_replace_the_text_with_the_MIN(){
+  Text *text = textNew("2+3*MIN");
   Text *MIN = textNew("(10**11)");
   Text *txt;
   
   txt = textSubstitude(text,4,3,MIN);
   
-  printf("text %s\n", text->string);
-  printf("MIN %s\n", MIN->string);
-  
-  // printf("txt %s\n", txt->string);
-  
-  TEST_ASSERT_EQUAL_STRING("2+3*MIN-6/8",text->string);
-  
-  
-  
+  TEST_ASSERT_EQUAL_STRING("2+3*MIN",text->string);
+  TEST_ASSERT_EQUAL_STRING("(10**11)",MIN->string);
+  TEST_ASSERT_EQUAL_STRING("2+3*(10**11)",txt->string);
 }
 
-
-
+void test_textSubstitude_should_replace_the_text_behind_with_the_MIN(){
+  Text *text = textNew("10+B");
+  Text *MIN = textNew("(5*6)");
+  Text *txt;
+  
+  txt = textSubstitude(text,3,1,MIN);
+  
+  TEST_ASSERT_EQUAL_STRING("10+(5*6)",txt->string);
+}
 
 

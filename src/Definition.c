@@ -33,27 +33,32 @@ Text *textClone(Text *text){
   
 	return clonetxt;
 }
-
+/**
+  //  2+3*MIN-6/8
+  //  0123456789
+  //  0 ~ 3 store to temp + 3 (7 ~ 10 store to another)
+  */
+  
 Text *textSubstitude(Text *text, int relativeStart, int length, Text *subText){
-  
   int i = 0;
-  int j = strlen(text->string);
-  int replace = relativeStart + length;
-  int start = text->string[relativeStart];
-  int stop = text->string[length];
+  int lengthText = 0;
   
-  for(;i<=j;i++){
-    if(text->string[i] >= replace ){
-    printf("must IN\n");
-      for(start;start <= stop ; start++ ){
-        printf("must IN to replace\n");
-        
-        text->string[start] = subText->string[0];
-        
-        printf("txt %s\n", text->string[start]);
-        return text;
-        }
-    }
-    else break;
-  }
+  Text *Temp = textNew("");
+  
+  strncpy(Temp->string,text->string,relativeStart);
+  i = strlen(Temp->string);
+  i = i + length;
+  lengthText = strlen(text ->string);
+  lengthText = lengthText - i;
+  
+  // printf("lenght i : %d\n", i);
+  // printf("lengthText : %d\n", lengthText);
+  // printf("string Store front    : %s\n\n", Temp->string);
+  strcat(Temp->string,subText->string);
+  // printf("string Append replace : %s\n\n", Temp->string);
+  
+  // strcat(Temp->string,text->string);
+  // printf("string Append back    : %s\n\n", Temp->string);
+  
+  return Temp;
 }
