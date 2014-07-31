@@ -1,6 +1,6 @@
 #include "unity.h"
-#include "Text.h"
 #include "Definition.h"
+#include "Text.h"
 #include "StringObject.h"
 #include "ErrorCode.h"
 #include "CException.h"
