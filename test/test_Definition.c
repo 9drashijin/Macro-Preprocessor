@@ -32,8 +32,10 @@ void printContent(String *str){
 
 void test_addDefinition_should_add_the_string_to_the_name_and_the_content(void){
   Definition *define;
-  String *defineName = stringNew("ABC");
-  String *defineContent = stringNew("2+B*D-6");
+  Text *textName = textNew("ABC");
+  Text *textContent = textNew("2+B*D-6");
+  String *defineName = stringNew(textName);
+  String *defineContent = stringNew(textContent);
  
   define = addDefinition(defineName,defineContent);
   
@@ -51,8 +53,10 @@ void test_addDefinition_should_add_the_string_to_the_name_and_the_content(void){
 
 void test_addDefinition_should_add_another_string_to_the_name_and_the_content(void){
   Definition *define;
-  String *defineName = stringNew("MIN");
-  String *defineContent = stringNew("C&&D|5");
+  Text *textName = textNew("MIN");
+  Text *textContent = textNew("C&&D|5");
+  String *defineName = stringNew(textName);
+  String *defineContent = stringNew(textContent);
  
   define = addDefinition(defineName,defineContent);
   

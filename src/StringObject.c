@@ -4,16 +4,17 @@
 #include <string.h>
 #include "Text.h"
 
-String *stringNew(char *textString){
+String *stringNew(Text *text){
 
 	String *newString = malloc(sizeof(String));
-  
-	newString->text = textNew(textString);
+	
+	newString->text = textAssign(text);
 	newString->start = 0;
-	newString->length = strlen(newString->text->string);
+	newString->length = strlen(text->string);
 	
 	return newString;
 }
+
 
 String *stringDelete(String *textString){
 

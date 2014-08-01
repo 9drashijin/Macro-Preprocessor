@@ -10,7 +10,7 @@ typedef struct String{
 	int length;
 }String;
 
-String *stringNew(char *textString);
+String *stringNew(Text *text);
 String *stringDelete(String *textString);
 String *stringClone(String *str);
 String *stringDuplicate(String *str);

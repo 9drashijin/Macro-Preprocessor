@@ -6,35 +6,45 @@ void setUp(void){}
 void tearDown(void){}
 
 void test_stringNew_should_create_a_new_string(void){
-  String *str = stringNew("define");
+  Text *text = textNew("define");
+  String *str = stringNew(text);
   
   TEST_ASSERT_EQUAL_STRING("define",str->text->string);
 	TEST_ASSERT_EQUAL(0,str->start);
 	TEST_ASSERT_EQUAL(6,str->length);
 
 }
+void test_stringNew_should_create_string_with_static_text(void){
+	Text *text = t"define";
+	String *str = stringNew(text);
+  TEST_ASSERT_EQUAL_STRING(text->string,str->text->string);
+	TEST_ASSERT_EQUAL(0,str->start);
+	TEST_ASSERT_EQUAL(6,str->length);
+}
 
 void test_stringDelete_should_delete_the_string(void){
-  String *str = stringNew("define");
+  Text *text = textNew("define");
+  String *str = stringNew(text);
   
   stringDelete(str);
-  
-  TEST_ASSERT_EQUAL_STRING(NULL,str->text);
+
 	TEST_ASSERT_EQUAL(0,str->start);
 	TEST_ASSERT_EQUAL(0,str->length);
 }
 
 //TRIM LEFT////////
 void test_stringLeftTrim_should_trim_the_string_to_the_left(void){
-  String *str = stringNew("define ");
+  Text *text = textNew("define");
+  String *str = stringNew(text);
   stringLeftTrim(str);
   
 	TEST_ASSERT_EQUAL(0,str->start);
-	TEST_ASSERT_EQUAL(7,str->length);
+	TEST_ASSERT_EQUAL(6,str->length);
 }
 
 void test_stringLeftTrim_should_trim_the_string_to_the_left_case2(void){
-	String *str = stringNew(" define ");
+  Text *text = textNew(" define ");
+	String *str = stringNew(text);
 	stringLeftTrim(str);
   
 	TEST_ASSERT_EQUAL(1,str->start);
@@ -42,7 +52,8 @@ void test_stringLeftTrim_should_trim_the_string_to_the_left_case2(void){
 }
 
 void test_stringLeftTrim_should_trim_the_string_to_the_left_case3(void){
-	String *str = stringNew("  not define ");
+  Text *text = textNew("  not define ");
+	String *str = stringNew(text);
 	stringLeftTrim(str);
   
 	TEST_ASSERT_EQUAL(2,str->start);
@@ -50,16 +61,25 @@ void test_stringLeftTrim_should_trim_the_string_to_the_left_case3(void){
 }
 
 void test_stringLeftTrim_should_trim_the_string_to_the_left_case4(void){
-	String *str = stringNew("      not define");
+  Text *text = textNew("      not define");
+	String *str = stringNew(text);
 	stringLeftTrim(str);
   
 	TEST_ASSERT_EQUAL(6,str->start);
 	TEST_ASSERT_EQUAL(10,str->length);
 }
-
+void test_stringLeftTrim_should_trim_the_string_to_the_left_with_Static_text(void){
+  Text *text = t"      not define";
+	String *str = stringNew(text);
+	stringLeftTrim(str);
+  
+	TEST_ASSERT_EQUAL(6,str->start);
+	TEST_ASSERT_EQUAL(10,str->length);
+}
 //TRIM RIGHT////////
 void test_stringRightTrim_should_trim_the_string_to_the_right(void){
-  String *str = stringNew(" define");
+  Text *text = textNew(" define");
+  String *str = stringNew(text);
   stringRightTrim(str);
   
   TEST_ASSERT_EQUAL(0,str->start);
@@ -67,14 +87,16 @@ void test_stringRightTrim_should_trim_the_string_to_the_right(void){
 }
 
 void test_stringTrimRight(void){
-	String *str = stringNew("    define ");
+  Text *text = textNew("    define ");
+	String *str = stringNew(text);
 	stringRightTrim(str);
 	TEST_ASSERT_EQUAL(0,str->start);
 	TEST_ASSERT_EQUAL(10,str->length);
 }
 
 void test_stringRightTrim_should_trim_the_string_to_the_left_case3(void){
-	String *str = stringNew("  not define ");
+  Text *text = textNew("  not define ");
+	String *str = stringNew(text);
 	stringRightTrim(str);
   
 	TEST_ASSERT_EQUAL(0,str->start);
@@ -82,7 +104,16 @@ void test_stringRightTrim_should_trim_the_string_to_the_left_case3(void){
 }
 
 void test_stringRightTrim_should_trim_the_string_to_the_left_case4(void){
-	String *str = stringNew("      not define   ");
+  Text *text = textNew("      not define   ");
+	String *str = stringNew(text);
+	stringRightTrim(str);
+  
+	TEST_ASSERT_EQUAL(0,str->start);
+	TEST_ASSERT_EQUAL(16,str->length);
+}
+void test_stringRightTrim_should_trim_the_string_to_the_left_with_Static_text(void){
+  Text *text = t"      not define   ";
+	String *str = stringNew(text);
 	stringRightTrim(str);
   
 	TEST_ASSERT_EQUAL(0,str->start);
@@ -91,8 +122,10 @@ void test_stringRightTrim_should_trim_the_string_to_the_left_case4(void){
 
 //STRING COMPARE/////////
 void test_stringCompare_should_compare_and_return_1_if_both_are_the_same(void){
-	String *str = stringNew("define");
-	String *str2 = stringNew("define");
+  Text *text = textNew("define");
+  Text *text1 = textNew("define");
+	String *str = stringNew(text);
+	String *str2 = stringNew(text1);
   int compare;
   
 	compare = stringCompare(str,str2);
@@ -100,8 +133,10 @@ void test_stringCompare_should_compare_and_return_1_if_both_are_the_same(void){
 }
 
 void test_stringCompare_should_compare_and_return_0_if_both_are_not_the_same(void){
-	String *str = stringNew("define");
-	String *str2 = stringNew("defineABC");
+  Text *text = textNew("define");
+  Text *text1 = textNew("defineABC");
+	String *str = stringNew(text);
+	String *str2 = stringNew(text1);
   int compare;
   
 	compare = stringCompare(str,str2);
@@ -109,8 +144,10 @@ void test_stringCompare_should_compare_and_return_0_if_both_are_not_the_same(voi
 }
 
 void test_stringCompare_should_compare_and_return_0_if_both_length_are_same_while_the_text_are_not(void){
-	String *str = stringNew("define");
-	String *str2 = stringNew("defiii");
+  Text *text = textNew("define");
+  Text *text1 = textNew("defiii");
+	String *str = stringNew(text);
+	String *str2 = stringNew(text1);
   int compare;
   
 	compare = stringCompare(str,str2);
@@ -118,7 +155,8 @@ void test_stringCompare_should_compare_and_return_0_if_both_length_are_same_whil
 }
 
 void test_stringClone_should_clone_the_source_to_the_destination_of_the_new_string(){
-  String *defination = stringNew("#define MIN 2*3");
+  Text *text = textNew("#define MIN 2*3");
+  String *defination = stringNew(text);
   String *strCopy;
   strCopy = stringClone(defination);
   
@@ -128,7 +166,8 @@ void test_stringClone_should_clone_the_source_to_the_destination_of_the_new_stri
 }
 
 void test_stringDuplicate_should_duplicate_the_string_to_a_new_string(){
-  String *defination = stringNew("#define MAX 5*8");
+  Text *text = textNew("#define MAX 5*8");
+  String *defination = stringNew(text);
   String *strDuplicate;
   strDuplicate = stringDuplicate(defination);
   
