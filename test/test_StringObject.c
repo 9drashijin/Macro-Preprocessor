@@ -118,13 +118,13 @@ void test_stringCompare_should_compare_and_return_0_if_both_length_are_same_whil
 }
 
 void test_stringClone_should_clone_the_source_to_the_destination_of_the_new_string(){
-  String *defination = stringNew("#define");
+  String *defination = stringNew("#define MIN 2*3");
   String *strCopy;
   strCopy = stringClone(defination);
   
-  TEST_ASSERT_EQUAL_STRING("#define",strCopy->text->string);
+  TEST_ASSERT_EQUAL_STRING("#define MIN 2*3",strCopy->text->string);
   TEST_ASSERT_EQUAL(0,strCopy->start);
-  TEST_ASSERT_EQUAL(7,strCopy->length);
+  TEST_ASSERT_EQUAL(15,strCopy->length);
 }
 
 void test_stringDuplicate_should_duplicate_the_string_to_a_new_string(){

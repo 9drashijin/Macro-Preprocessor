@@ -40,25 +40,42 @@ Text *textClone(Text *text){
   */
   
 Text *textSubstitude(Text *text, int relativeStart, int length, Text *subText){
-  int i = 0;
-  int lengthText = 0;
+  Text *Temp;
+  int txtLength, subLength, returnLength ,storedLength;
+  int cpyStart,cpyLength;
   
-  Text *Temp = textNew("");
+  txtLength = textLength(text);
+  subLength = textLength(subText); 
+  returnLength = txtLength + subLength - length;
+  // printf("returnLength: %d \n",returnLength);
   
-  strncpy(Temp->string,text->string,relativeStart);
-  i = strlen(Temp->string);
-  i = i + length;
-  lengthText = strlen(text ->string);
-  lengthText = lengthText - i;
+  Text *Textreturn = textEmptyNew(returnLength);
+
+  strncpy(Textreturn->string,text->string,relativeStart);
   
-  // printf("lenght i : %d\n", i);
-  // printf("lengthText : %d\n", lengthText);
-  // printf("string Store front    : %s\n\n", Temp->string);
-  strcat(Temp->string,subText->string);
-  // printf("string Append replace : %s\n\n", Temp->string);
+  // printf("string Store front    : %s\n", Textreturn->string);
   
-  // strcat(Temp->string,text->string);
-  // printf("string Append back    : %s\n\n", Temp->string);
+  storedLength = textLength(Textreturn);
+  strcat(Textreturn->string,subText->string);
   
-  return Temp;
+  // printf("string Append replace : %s\n\n", Textreturn->string);
+  
+  cpyStart = storedLength+length;
+  cpyLength = txtLength - cpyStart;
+  
+  strcpy(Temp->string,&text->string[cpyStart]);
+  
+  strcat(Textreturn->string,Temp->string);
+  
+  return Textreturn;
+}
+
+void strCpy(char *dest, char *src, int start, int length){
+  int i,j;
+  
+  for(i = start, j = 0; i<length; i++, j++){
+    dest[j] = src[i];
+  }
+  dest[j] = 0;
+  
 }

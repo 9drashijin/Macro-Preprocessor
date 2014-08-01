@@ -115,12 +115,10 @@ void test_textSubstitude_should_replace_the_text_with_the_MIN(){
   
   txt = textSubstitude(text,4,3,MIN);
   
-  TEST_ASSERT_EQUAL_STRING("2+3*MIN",text->string);
-  TEST_ASSERT_EQUAL_STRING("(10**11)",MIN->string);
   TEST_ASSERT_EQUAL_STRING("2+3*(10**11)",txt->string);
 }
 
-void test_textSubstitude_should_replace_the_text_behind_with_the_MIN(){
+void test_textSubstitude_should_replace_the_text_with_the_MIN_for_2nd_test(){
   Text *text = textNew("10+B");
   Text *MIN = textNew("(5*6)");
   Text *txt;
@@ -130,4 +128,60 @@ void test_textSubstitude_should_replace_the_text_behind_with_the_MIN(){
   TEST_ASSERT_EQUAL_STRING("10+(5*6)",txt->string);
 }
 
-
+void test_textSubstitude_should_replace_the_text_with_the_MIN_for_3nd_test(){
+  Text *text = textNew("Hello A");
+  Text *A = textNew("World");
+  Text *txt;
+  
+  txt = textSubstitude(text,6,1,A);
+  
+  TEST_ASSERT_EQUAL_STRING("Hello World",txt->string);
+}
+void test_strCpy(){
+  char text[100];
+  char A[] = "World";
+  
+  strCpy(text,A,0,5);
+  
+  TEST_ASSERT_EQUAL_STRING("World",text);
+}
+void test_textSubstitude_should_replace_the_middle_text_with_the_subText(){
+  Text *text = textNew("1+2*MAX-6/8");
+  Text *subText = textNew("(3-4)");
+  Text *returnedText;
+  
+  returnedText = textSubstitude(text,4,3,subText);
+  
+  // printf("returnedText : %s \n", returnedText->string);
+  
+  TEST_ASSERT_EQUAL_STRING("1+2*(3-4)-6/8",returnedText->string);
+}
+void test_textSubstitude_should_replace_the_front_text_with_the_subText(){
+  Text *text = textNew("zxcA World");
+  Text *subText = textNew("Hello");
+  Text *returnedText;
+  
+  returnedText = textSubstitude(text,3,1,subText);
+  // printf("returnedText : %s \n", returnedText->string);
+  TEST_ASSERT_EQUAL_STRING("zxcHello World",returnedText->string);
+}
+void test_textSubstitude_should_replace_the_behind_text_with_the_subText(){
+  Text *text = textNew("123+SUPER");
+  Text *subText = textNew("(10*11)");
+  Text *returnedText;
+  
+  returnedText = textSubstitude(text,4,5,subText);
+  
+  TEST_ASSERT_EQUAL_STRING("123+(10*11)",returnedText->string);
+}
+void test_textSubstitude_should_replace_the_text_with_the_Static_subText(){
+  Text *text = t"1+2*MAX-6/8";
+  Text *subText = t"(3-4)";
+  Text *returnedText;
+  
+  returnedText = textSubstitude(text,4,3,subText);
+  
+  // printf("returnedText : %s \n", returnedText->string);
+  
+  TEST_ASSERT_EQUAL_STRING("1+2*(3-4)-6/8",returnedText->string);
+}

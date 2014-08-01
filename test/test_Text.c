@@ -90,3 +90,21 @@ void test_textDelete_should_not_delete_the_text_and_reduce_the_reference(void){
 	TEST_ASSERT_EQUAL(text1,textDelete(text));
 	TEST_ASSERT_EQUAL(0x80000000,textDelete(text)->reference);
 }
+
+void test_textLength_should_return_the_length_of_the_text(){
+  Text *text = textNew("LengthOfText");
+  int length;
+  
+  length = textLength(text);
+  
+  TEST_ASSERT_EQUAL(12,length);
+}
+void test_textEmptyNew_should_return_the_length_of_the_text(){
+  Text *txt = textNew("LengthOfText");
+  Text *text = textEmptyNew(12);
+  int length;
+  
+  length = textLength(text);
+  // TEST_ASSERT_EQUAL_STRING("",text->string);
+  TEST_ASSERT_EQUAL(1,text->reference);
+}

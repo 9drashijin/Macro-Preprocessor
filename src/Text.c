@@ -4,7 +4,7 @@
 #include "String.h"
 
 Text *textNew(char *str){
-	Text *text = (Text *)malloc(strlen(str)+4+1);
+	Text *text = (Text *)malloc((strlen(str)+1)*4);
 	strcpy(text->string,str);
 	text->reference = 1;
 	return text;
@@ -25,4 +25,13 @@ Text *textDelete(Text *text){
 		}		
 	}
 	return text;
+}
+int textLength(Text *text){
+  return strlen(text->string);
+}
+Text *textEmptyNew(int length){
+  Text *text = malloc(sizeof(int)*(length)+4+2);
+  
+  text->reference = 1;
+  return text;
 }

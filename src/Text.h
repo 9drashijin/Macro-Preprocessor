@@ -11,6 +11,7 @@ typedef struct Text{
 Text *textNew(char *CharStr);
 Text *textAssign(Text *text);
 Text *textDelete(Text *text);
-
+int textLength(Text *text);
+Text *textEmptyNew(int length);
 
 #endif // Text_H
