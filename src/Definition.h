@@ -15,7 +15,7 @@ Definition *addDefinition(String *name, String *content);
 int isPreprocessors(Text *hash);
 void defineTest(String *define);
 Text *textClone(Text *text);
-Text *textSubstitude(Text *text, int relativeStart, int length, Text *subText);
+Text *textSubstitute(Text *text, int relativeStart, int length, Text *subText);
 void strCpy(char *dest, char *src, int start, int length);
 
 #endif // Definition_H

@@ -39,7 +39,7 @@ Text *textClone(Text *text){
   //  0 ~ 3 store to temp + 3 (7 ~ 10 store to another)
   */
   
-Text *textSubstitude(Text *text, int relativeStart, int length, Text *subText){
+Text *textSubstitute(Text *text, int relativeStart, int length, Text *subText){
   Text *Temp;
   int txtLength, subLength, returnLength ,storedLength;
   int cpyStart,cpyLength;
