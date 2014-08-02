@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include "StringObject.h"
 #include "Text.h"
+#include "CharSet.h"
 
 
 Definition *addDefinition(String *name, String *content){

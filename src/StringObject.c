@@ -3,6 +3,7 @@
 #include <malloc.h>
 #include <string.h>
 #include "Text.h"
+#include "CharSet.h"
 
 String *stringNew(Text *text){
 
@@ -82,6 +83,11 @@ void stringRightTrim(String *string){
 	}
 }
 
+void stringTrim(String *string){
+	stringLeftTrim(string);
+	stringRightTrim(string);
+}
+
 int stringCompare(String *string1, String *string2){
   int i;
   int length1,length2;
@@ -98,4 +104,63 @@ int stringCompare(String *string1, String *string2){
   return 1;
   }
   else return 0;
+}
+
+String *stringRemoveWordNotContaining(String *str,char delimiter[]){
+	int i,j,count;
+  int delimiterLength;
+  int strLength;
+	String *strReturn = stringNew(str->text);
+	
+	delimiterLength = strlen(delimiter);
+	strLength = strlen(str->text->string);
+	strReturn->start = str->start;
+	strReturn->length = 0;
+	
+	for(j=str->start ; j<strLength ; j++){
+		for(i=0,count=0 ; i<delimiterLength ; i++){
+			if(str->text->string[j] == delimiter[i]){
+				break;
+			}
+			else{
+				count++;
+			}
+		}
+		if(count >= delimiterLength){
+			str->start++;
+			str->length--;
+			strReturn->length++;
+		}
+		else
+			break;
+	}
+	return strReturn;
+}
+
+String *stringRemoveWordContaining(String *str, char containSet[]){
+	int i,j,count;
+  int containLength;
+  int strLength;
+	String *strReturn = stringNew(str->text);
+	containLength = strlen(containSet);
+	strLength = strlen(str->text->string);
+	strReturn->start = str->start;
+	strReturn->length = 0;
+	
+	for(j=str->start ; j<strLength ; j++){
+		for(i=0,count=0 ; i<containLength ; i++){
+			if(str->text->string[j] == containSet[i]){
+				str->start++;
+				str->length--;
+				strReturn->length++;
+				break;
+			}
+			else{
+				count++;
+			}
+		}
+		if(count>=containLength)
+			break;
+	}
+	return strReturn;
 }

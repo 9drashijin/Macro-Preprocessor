@@ -1,5 +1,6 @@
 #include "unity.h"
 #include "Text.h"
+#include "CharSet.h"
 
 void setUp(void){}
 void tearDown(void){}

@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <malloc.h>
 #include "String.h"
+#include "CharSet.h"
 
 Text *textNew(char *str){
 	Text *text = (Text *)malloc((strlen(str)+1)*4);
