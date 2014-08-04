@@ -23,6 +23,17 @@ void test_stringNew_should_create_string_with_static_text(void){
 	TEST_ASSERT_EQUAL(6,str->length);
 }
 
+void test_stringAssign_should_increase_the_text_reference(void){
+	Text *text = textNew("define");
+	String *str = stringNew(text);
+	String *str1 = stringAssign(str); //2 pointer to str
+	String *str2 = stringAssign(str); //3 pointer to str 
+	TEST_ASSERT_EQUAL(3,str->reference);
+	TEST_ASSERT_EQUAL(2,str->text->reference);
+  TEST_ASSERT_EQUAL(0,str->start);
+	TEST_ASSERT_EQUAL(6,str->length);
+}
+
 void test_stringDelete_should_delete_the_string(void){
   Text *text = textNew("define");
   String *str = stringNew(text);
@@ -31,6 +42,21 @@ void test_stringDelete_should_delete_the_string(void){
 
 	TEST_ASSERT_EQUAL(0,str->start);
 	TEST_ASSERT_EQUAL(0,str->length);
+  
+}
+
+void test_stringDel_should_delete_the_string_with_text_reference(void){
+	String *result;
+  Text *text = textNew("define");
+	String *str = stringNew(text);
+  String *str1 = stringAssign(str);
+	String *str2 = stringAssign(str);
+  
+  result = stringDel(str);
+	TEST_ASSERT_EQUAL(2,result->reference);
+	TEST_ASSERT_EQUAL(2,str->text->reference);
+  TEST_ASSERT_EQUAL(0,str->start);
+	TEST_ASSERT_EQUAL(6,str->length);
 }
 
 // TRIM LEFT////////
@@ -171,6 +197,7 @@ void test_stringCompare_should_compare_and_return_0_if_both_length_are_same_whil
 	TEST_ASSERT_EQUAL(0,compare);
 }
 
+// STRING CLONE /////////
 void test_stringClone_should_clone_the_source_to_the_destination_of_the_new_string(void){
   Text *text = textNew("#define");
   String *defination = stringNew(text);
@@ -182,6 +209,7 @@ void test_stringClone_should_clone_the_source_to_the_destination_of_the_new_stri
   TEST_ASSERT_EQUAL(7,strCopy->length);
 }
 
+// STRING DUPLICATE /////////
 void test_stringDuplicate_should_duplicate_the_string_to_a_new_string(void){
   Text *text = textNew("#define MAX 5*8");
   String *defination = stringNew(text);
@@ -277,4 +305,19 @@ void test_stringRemoveWordContaining_should_remove_the_word_with_static_text(voi
 	TEST_ASSERT_EQUAL(0,remove->start);
 	TEST_ASSERT_EQUAL(4,remove->length);
 	TEST_ASSERT_EQUAL(0x80000000,text->reference);
+}
+
+void test_findIdentifier_should_find_the_identifier_and_return(void){
+	Text *text = textNew("1+2*MAX-6/8");
+  Text *subText = textNew("(10*11)");
+	String *str = stringNew(text);
+  String *iden;
+  // iden = findIdentifier(str);
+  
+  // Text *returnedText;
+  // returnedText = textSubstitute(text,4,3,subText);
+  
+	TEST_ASSERT_EQUAL_STRING("1+2*MAX-6/8",str->text->string);
+  
+  printf("iden: %s\n",str->text->string);
 }

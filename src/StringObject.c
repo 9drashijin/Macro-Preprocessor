@@ -10,12 +10,17 @@ String *stringNew(Text *text){
 	String *newString = malloc(sizeof(String));
 	
 	newString->text = textAssign(text);
+  newString->reference = 1;
 	newString->start = 0;
 	newString->length = strlen(text->string);
 	
 	return newString;
 }
 
+String *stringAssign(String *string){
+	string->reference++;
+	return string;
+}
 
 String *stringDelete(String *textString){
 
@@ -25,6 +30,17 @@ String *stringDelete(String *textString){
   deletedString->length = 0;
   
   return deletedString;
+}
+
+String *stringDel(String *string){
+
+	string->reference--;
+	if(string->reference == 0){
+		free(string);
+		textDelete(string->text);
+		return NULL;
+	}
+	return string;
 }
 
 String *stringClone(String *str){
@@ -163,4 +179,18 @@ String *stringRemoveWordContaining(String *str, char containSet[]){
 			break;
 	}
 	return strReturn;
+}
+
+String *findIdentifier(String *str){
+  String *str2;
+  String *iden;
+  String *temp;
+
+  str2  = stringClone(str);
+  
+  temp = stringRemoveWordNotContaining(str2,alphabetSet);
+  stringDel(str2);
+  iden = stringRemoveWordContaining(temp,alphaNumericSet);
+  
+  return iden;
 }
