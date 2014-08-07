@@ -8,7 +8,7 @@ struct Node{
 	int balance;
 	Node *leftChild;
   Node *rightChild;
-  void data;
+  int data;
 };
 
 Node *avlAdd(Node *root , Node *nodeToAdd, int (*compare)(void *, void *));

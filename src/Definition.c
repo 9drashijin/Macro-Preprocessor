@@ -34,6 +34,7 @@ Text *textClone(Text *text){
   
 	return clonetxt;
 }
+
 /**
   //  2+3*MIN-6/8
   //  0123456789
@@ -70,7 +71,11 @@ Text *textSubstitute(Text *text, int relativeStart, int length, Text *subText){
   
   return Textreturn;
 }
-
+/**
+* Function  : Custom string Copy (strCpy)
+* Input     : Source and Destination with start and the length of the string to copy
+* Output    : none
+*/
 void strCpy(char *dest, char *src, int start, int length){
   int i,j;
   

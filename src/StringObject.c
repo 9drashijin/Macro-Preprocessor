@@ -45,7 +45,8 @@ String *stringDel(String *string){
 
 String *stringClone(String *str){
 
-  char *newString = malloc(sizeof(strlen(str->text->string+1)));
+  // char *newString = malloc(sizeof(strlen(str->text->string+1)));
+  char *newString = malloc(sizeof(String));
   String *rString = malloc(sizeof(String));
   
   strcpy(newString,str->text->string);
@@ -182,15 +183,29 @@ String *stringRemoveWordContaining(String *str, char containSet[]){
 }
 
 String *findIdentifier(String *str){
-  String *str2;
-  String *iden;
-  String *temp;
+  String *str2 = stringNew(str->text);
+  String *iden = stringNew(str->text);
+  String *temp = stringNew(str2->text);
 
   str2  = stringClone(str);
+  // str2  = stringDuplicate(str);
   
-  temp = stringRemoveWordNotContaining(str2,alphabetSet);
-  stringDel(str2);
-  iden = stringRemoveWordContaining(temp,alphaNumericSet);
+  temp = stringRemoveWordNotContaining(str2,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"); //alphabetSet
+  // printf("temp: %s\n",temp->text->string);
+  // printf("str2: %s\n",str2->text->string);
+  
+  stringDel(temp);
+  // printf("temp after: %s\n",temp->text->string);
+  iden = stringRemoveWordContaining(str2,"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"); //alphaNumericSet
+  // printf("iden: %s\n",iden->text->string);
   
   return iden;
+  
+  //////////////////////////////////////////////
+  
+  // String *str2 = stringClone(str);
+  // String *remove = stringRemoveWordNotContaining(str2,alphabetSet);
+  // stringDel(remove);
+  // String *iden = stringRemoveWordContaining(str2,alphaNumericSet);
+  // return iden;
 }

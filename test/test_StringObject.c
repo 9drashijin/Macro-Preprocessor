@@ -232,6 +232,7 @@ void test_stringRemoveWordNotContaining_should_remove_the_word(void){
 	TEST_ASSERT_EQUAL(0,remove->start);
 	TEST_ASSERT_EQUAL(14,remove->length);
 	TEST_ASSERT_EQUAL(3,text->reference);
+  
 }
 
 void test_stringRemoveWordNotContaining_should_not_remove_the_word_if_start_from_front(void){
@@ -311,13 +312,18 @@ void test_findIdentifier_should_find_the_identifier_and_return(void){
 	Text *text = textNew("1+2*MAX-6/8");
   Text *subText = textNew("(10*11)");
 	String *str = stringNew(text);
-  String *iden;
-  // iden = findIdentifier(str);
   
   // Text *returnedText;
   // returnedText = textSubstitute(text,4,3,subText);
   
+  String *iden = findIdentifier(str);
+  
 	TEST_ASSERT_EQUAL_STRING("1+2*MAX-6/8",str->text->string);
   
-  printf("iden: %s\n",str->text->string);
+  // printf("str: %s\n",str->text->string);
+  // printf("iden: %s\n",iden->text->string);
+  // printf("iden: %s\n",iden->start);
+  // printf("iden: %s\n",iden->length);
+  
+  // printf("iden: %s\n",str->start);
 }
