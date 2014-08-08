@@ -8,6 +8,10 @@
 #include <stdio.h>
 #include <malloc.h>
 #include "CharSet.h"
+#include "AVL.h"
+#include "Rotation.h"
+#include "AVLString.h"
+#include "CustomAssert.h"
 
 void setUp(void){}
 void tearDown(void){}
@@ -220,4 +224,254 @@ void test_textSubstitute_should_replace_the_text_with_multiple_subText(){
   
   // TEST_ASSERT_EQUAL_STRING("1+2*(42-(1+13))-6/8",returnedText->string);
   free(returnedText);
+}
+
+/////////////////////
+// Definition Find //
+/////////////////////
+
+/**
+  *        MIN 
+  *       /   \
+  *   MAX     SUPER
+  */
+void test_definitionFind_should_find_the_definition_in_the_Definition_table(){
+  DefinitionTable MAX = {.data = "MAX", .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  DefinitionTable SUPER = {.data = "SUPER", .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  DefinitionTable MIN = {.data = "MIN", .balance = 0, .leftChild = &MAX, .rightChild = &SUPER};
+  DefinitionTable *root = &MIN;
+  DefinitionTable *rootFind = NULL;
+  
+  rootFind = (DefinitionTable *)definitionFind(root, &MIN);
+  TEST_ASSERT_EQUAL(&MIN,rootFind);
+}
+/**
+  *        MIN 
+  *       /   \
+  *   MAX     SUPER
+  *             \
+  *             ULTRA
+  */
+void test_definitionFind_should_find_the_definition_in_the_Definition_table_case2(){
+  DefinitionTable ULTRA = {.data = "ULTRA", .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  DefinitionTable MAX = {.data = "MAX", .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  DefinitionTable SUPER = {.data = "SUPER", .balance = 0, .leftChild = NULL, .rightChild = &ULTRA};
+  DefinitionTable MIN = {.data = "MIN", .balance = 0, .leftChild = &MAX, .rightChild = &SUPER};
+  DefinitionTable *root = &MIN;
+  DefinitionTable *rootFind = NULL;
+  
+  rootFind = (DefinitionTable *)definitionFind(root, &MAX);
+  TEST_ASSERT_EQUAL(&MAX,rootFind);
+  
+  rootFind = (DefinitionTable *)definitionFind(root, &SUPER);
+  TEST_ASSERT_EQUAL(&SUPER,rootFind);
+  
+  rootFind = (DefinitionTable *)definitionFind(root, &ULTRA);
+  TEST_ASSERT_EQUAL(&ULTRA,rootFind);
+}
+////////////////////
+// Definition Add //
+////////////////////
+/**
+  *    name content
+  *     MIN 2+8*6
+  *     /      \
+  *   NULL     NULL
+  */
+void test_definitonAdd_by_adding_the_Definiton_to_the_definition_table(){
+  Definition *define;
+  Text *textName = textNew("MIN");
+  Text *textContent = textNew("2+8*6");
+  String *defineName = stringNew(textName);
+  String *defineContent = stringNew(textContent);
+  
+  define = addDefinition(defineName,defineContent);
+  
+  DefinitionTable MIN = {.data = define, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	DefinitionTable *root = NULL;
+  DefinitionTable *rootFind = NULL;
+  
+  root = (DefinitionTable *) definitionAdd(root,&MIN);
+	
+  // printf("data: %s\n",defineName->text->string);
+  // printf("data: %s\n",define->name->text->string);
+  // printf("data: %s\n",((Definition *)(MIN.data))->name->text->string);
+  // printf("content: %s\n",((Definition *)(MIN.data))->content->text->string);
+  
+	TEST_ASSERT_EQUAL_PTR(&MIN, root);
+	TEST_ASSERT_EQUAL_PTR(NULL, MIN.leftChild);
+	TEST_ASSERT_EQUAL_PTR(NULL, MIN.rightChild);
+  
+  TEST_ASSERT_EQUAL(0, MIN.balance);
+  
+  TEST_ASSERT_EQUAL_AVL_Node(NULL,NULL,0,&MIN);
+}
+/**
+  *    name content
+  *     MIN 2+8*6 (1)
+  *     /      \
+  *   NULL     MAX 5-7
+  */
+void test_definitonAdd_by_adding_the_Definiton_to_the_definition_table_for_2_definition(){
+  Definition *define, *define2;
+  Text *textName = textNew("MIN");
+  Text *textContent = textNew("2+8*6");
+  String *defineName = stringNew(textName);
+  String *defineContent = stringNew(textContent);
+  
+  Text *textName2 = textNew("MAX");
+  Text *textContent2 = textNew("5-7");
+  String *defineName2 = stringNew(textName2);
+  String *defineContent2 = stringNew(textContent2);
+  
+  define = addDefinition(defineName,defineContent);
+  define2 = addDefinition(defineName2,defineContent2);
+  
+  DefinitionTable MIN = {.data = define, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  DefinitionTable MAX = {.data = define2, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  
+	DefinitionTable *root = NULL;
+  DefinitionTable *rootFind = NULL;
+  
+  root = (DefinitionTable *) definitionAdd(root,&MIN);
+  root = (DefinitionTable *) definitionAdd(root,&MAX);
+	
+	TEST_ASSERT_EQUAL_PTR(&MIN, root);
+	TEST_ASSERT_EQUAL_PTR(NULL, MIN.leftChild);
+	TEST_ASSERT_EQUAL_PTR(&MAX, MIN.rightChild);
+  
+  TEST_ASSERT_EQUAL(1, MIN.balance);
+  
+  TEST_ASSERT_EQUAL_AVL_Node(NULL,&MAX,1,&MIN);
+  TEST_ASSERT_EQUAL_AVL_Node(NULL,NULL,0,&MAX);
+}
+/**
+  *       name content
+  *         MAX 5-7 
+  *         /      \
+  *  MIN 2+8*6    SUPER 88*2
+  */
+void test_definitonAdd_by_adding_the_Definiton_to_the_definition_table_for_3_definition_and_should_rightRotate_the_table(){
+  Definition *define, *define2, *define3;
+  Text *textName = textNew("MIN");
+  Text *textContent = textNew("2+8*6");
+  String *defineName = stringNew(textName);
+  String *defineContent = stringNew(textContent);
+  
+  Text *textName2 = textNew("MAX");
+  Text *textContent2 = textNew("5-7");
+  String *defineName2 = stringNew(textName2);
+  String *defineContent2 = stringNew(textContent2);
+  
+  Text *textName3 = textNew("SUPER");
+  Text *textContent3 = textNew("88*2");
+  String *defineName3 = stringNew(textName3);
+  String *defineContent3 = stringNew(textContent3);
+  
+  define = addDefinition(defineName,defineContent);
+  define2 = addDefinition(defineName2,defineContent2);
+  define3 = addDefinition(defineName3,defineContent3);
+  
+  DefinitionTable MIN = {.data = define, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  DefinitionTable MAX = {.data = define2, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  DefinitionTable SUPER = {.data = define3, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  
+	DefinitionTable *root = NULL;
+  DefinitionTable *rootFind = NULL;
+  
+  root = (DefinitionTable *) definitionAdd(root,&MIN);
+  root = (DefinitionTable *) definitionAdd(root,&MAX);
+  root = (DefinitionTable *) definitionAdd(root,&SUPER);
+	
+  // printf("MIN %p\n",&MIN);
+	// printf("MAX %p\n",&MAX);
+	// printf("SUPER %p\n",&SUPER);
+  
+	TEST_ASSERT_EQUAL_PTR(&MAX, root);
+	TEST_ASSERT_EQUAL_PTR(&MIN, MAX.leftChild);
+	TEST_ASSERT_EQUAL_PTR(&SUPER, MAX.rightChild);
+  
+  TEST_ASSERT_EQUAL(0, MAX.balance);
+  TEST_ASSERT_EQUAL(0, MIN.balance);
+  TEST_ASSERT_EQUAL(0, SUPER.balance);
+  
+  TEST_ASSERT_EQUAL_AVL_Node(&MIN,&SUPER,0,&MAX);
+  TEST_ASSERT_EQUAL_AVL_Node(NULL,NULL,0,&MIN);
+  TEST_ASSERT_EQUAL_AVL_Node(NULL,NULL,0,&SUPER);
+}
+/**
+  *       name content
+  *         SUPER 88*2 
+  *         /     \
+  *   MAX 5-7    MIN 2+8*6
+  *                   \
+  *                 ULTRA 531
+  */
+void test_definitonAdd_by_adding_the_Definiton_to_the_definition_table_for_3_definition_and_should_add_ULTRA_under_right_of_SUPER(){
+  Definition *define, *define2, *define3, *define4;
+  Text *textName = textNew("MIN");
+  Text *textContent = textNew("2+8*6-4");
+  String *defineName = stringNew(textName);
+  String *defineContent = stringNew(textContent);
+  
+  Text *textName2 = textNew("MAX");
+  Text *textContent2 = textNew("5-7/45*3");
+  String *defineName2 = stringNew(textName2);
+  String *defineContent2 = stringNew(textContent2);
+  
+  Text *textName3 = textNew("SUPER");
+  Text *textContent3 = textNew("88*2+65");
+  String *defineName3 = stringNew(textName3);
+  String *defineContent3 = stringNew(textContent3);
+  
+  Text *textName4 = textNew("ULTRA");
+  Text *textContent4 = textNew("531/45");
+  String *defineName4 = stringNew(textName4);
+  String *defineContent4 = stringNew(textContent4);
+  
+  define = addDefinition(defineName,defineContent);
+  define2 = addDefinition(defineName2,defineContent2);
+  define3 = addDefinition(defineName3,defineContent3);
+  define4 = addDefinition(defineName4,defineContent4);
+  
+  DefinitionTable MIN = {.data = define, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  DefinitionTable MAX = {.data = define2, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  DefinitionTable SUPER = {.data = define3, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  DefinitionTable ULTRA = {.data = define4, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  
+	DefinitionTable *root = NULL;
+  DefinitionTable *rootFind = NULL;
+  
+  root = (DefinitionTable *) definitionAdd(root,&MIN);
+  root = (DefinitionTable *) definitionAdd(root,&MAX);
+  root = (DefinitionTable *) definitionAdd(root,&SUPER);
+  root = (DefinitionTable *) definitionAdd(root,&ULTRA);
+	
+  // printf("MIN %p\n",&MIN);
+	// printf("MAX %p\n",&MAX);
+	// printf("SUPER %p\n",&SUPER);
+	// printf("ULTRA %p\n",&ULTRA);
+	
+  // printf("%d\n", strcmp("MIN","MAX"));
+  // printf("%d\n", strcmp("MAX","MIN"));
+  // printf("%d\n", strcmp("SUPER","MIN"));
+  // printf("%d\n", strcmp("MIN","SUPER"));
+  
+	TEST_ASSERT_EQUAL_PTR(&SUPER, root);
+	TEST_ASSERT_EQUAL_PTR(&MAX, SUPER.leftChild);
+	TEST_ASSERT_EQUAL_PTR(&MIN, SUPER.rightChild);
+	TEST_ASSERT_EQUAL_PTR(&ULTRA, MIN.rightChild);
+  
+  TEST_ASSERT_EQUAL(0, MAX.balance);
+  TEST_ASSERT_EQUAL(1, MIN.balance);
+  TEST_ASSERT_EQUAL(1, SUPER.balance);
+  TEST_ASSERT_EQUAL(0, ULTRA.balance);
+  
+  TEST_ASSERT_EQUAL_AVL_Node(&MAX,&MIN,1,&SUPER);
+  TEST_ASSERT_EQUAL_AVL_Node(NULL,NULL,0,&MAX);
+  TEST_ASSERT_EQUAL_AVL_Node(NULL,&ULTRA,1,&MIN);
+  TEST_ASSERT_EQUAL_AVL_Node(NULL,NULL,0,&ULTRA);
+  
+  rootFind = (DefinitionTable *)definitionFind(root, &SUPER);
+  TEST_ASSERT_EQUAL(&SUPER,rootFind);
 }

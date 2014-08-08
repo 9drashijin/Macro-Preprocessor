@@ -101,9 +101,19 @@ void strCpy(char *dest, char *src, int start, int length){
   dest[j] = 0;
 }
 
-Definition *definitionFind(DefinitionTable tbl, String *name){}
+Definition *DefinitionFind(DefinitionTable *tbl, String *name){}
 void DefinitionAdd(DefinitionTable *tbl, Definition *definition){}
 
+
+int compareDefinition(void *nodeInTree, void *stringToCompare){
+	DefinitionTable *node1 = (DefinitionTable *)nodeInTree;
+  DefinitionTable *node2 = (DefinitionTable *)stringToCompare;
+	// String *node2 = (String *)stringToCompare;
+
+	if(stringIsEqual(node1->data, node2->data) == 0)return 0;
+	else if(stringIsEqual(node1->data, node2->data) > 0) return 1;
+	else if(stringIsEqual(node1->data, node2->data) < 0) return -1;
+}
 
 
 

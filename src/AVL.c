@@ -11,7 +11,7 @@ Node *avlAdd(Node *root , Node *nodeToAdd, int (*compare)(void *, void *)){
 	else{
 		
 	compareResult = compare(root, nodeToAdd);
-	if(compareResult == 0){printf(" ");}
+	if(compareResult == 0){;}
 	
 	else if (compareResult == 1){ // added left
 		
@@ -57,7 +57,7 @@ Node *avlAdd(Node *root , Node *nodeToAdd, int (*compare)(void *, void *)){
 		}
 	}
 	
-	else{printf("ZXC");}
+	else{;}
 }
 	
 	return root;

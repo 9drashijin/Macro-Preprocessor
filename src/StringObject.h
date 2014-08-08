@@ -20,7 +20,7 @@ String *stringDuplicate(String *str);
 void stringLeftTrim(String *string);
 void stringRightTrim(String *string);
 void stringTrim(String *string);
-int stringCompare(String *string1, String *string2);
+int stringIsEqual(String *string1, String *string2);
 String *stringRemoveWordNotContaining(String *str,char delimites[]);
 String *stringRemoveWordContaining(String *str, char containSet[]);
 String *findIdentifier(String *str);

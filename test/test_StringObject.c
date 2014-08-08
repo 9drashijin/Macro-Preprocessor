@@ -164,37 +164,37 @@ void test_stringTrim_should_trim_both_sides_second_test(void){
 }
 
 // STRING COMPARE/////////
-void test_stringCompare_should_compare_and_return_1_if_both_are_the_same(void){
+void test_stringIsEqual_should_compare_and_return_1_if_both_are_the_same(void){
   Text *text = textNew("define");
   Text *text1 = textNew("define");
 	String *str = stringNew(text);
 	String *str2 = stringNew(text1);
   int compare;
   
-	compare = stringCompare(str,str2);
-	TEST_ASSERT_EQUAL(1,compare);
+	compare = stringIsEqual(str,str2);
+	TEST_ASSERT_EQUAL(0,compare);
 }
 
-void test_stringCompare_should_compare_and_return_0_if_both_are_not_the_same(void){
+void test_stringIsEqual_should_compare_and_return_0_if_both_are_not_the_same(void){
   Text *text = textNew("define");
   Text *text1 = textNew("defineABC");
 	String *str = stringNew(text);
 	String *str2 = stringNew(text1);
   int compare;
   
-	compare = stringCompare(str,str2);
-	TEST_ASSERT_EQUAL(0,compare);
+	compare = stringIsEqual(str,str2);
+	TEST_ASSERT_EQUAL(-1,compare);
 }
 
-void test_stringCompare_should_compare_and_return_0_if_both_length_are_same_while_the_text_are_not(void){
+void test_stringIsEqual_should_compare_and_return_0_if_both_length_are_same_while_the_text_are_not(void){
   Text *text = textNew("define");
   Text *text1 = textNew("defiii");
 	String *str = stringNew(text);
 	String *str2 = stringNew(text1);
   int compare;
   
-	compare = stringCompare(str,str2);
-	TEST_ASSERT_EQUAL(0,compare);
+	compare = stringIsEqual(str,str2);
+	TEST_ASSERT_EQUAL(1,compare);
 }
 
 // STRING CLONE /////////
@@ -307,7 +307,9 @@ void test_stringRemoveWordContaining_should_remove_the_word_with_static_text(voi
 	TEST_ASSERT_EQUAL(4,remove->length);
 	TEST_ASSERT_EQUAL(0x80000000,text->reference);
 }
-
+/////////////////////
+// Find Identifier //
+/////////////////////
 void test_findIdentifier_should_find_the_identifier_and_return_the_start_and_length(void){
 	Text *text = textNew("1+2*MAX-6/8");
 	String *str = stringNew(text);

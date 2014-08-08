@@ -145,7 +145,7 @@ void stringTrim(String *string){
 * Input     : Two different String Object to be compare
 * Return    : if same return 1, else return 0 if not the same
 */
-int stringCompare(String *string1, String *string2){
+int stringIsEqual(String *string1, String *string2){
   int i;
   int length1,length2;
   char rString1, rString2;
@@ -153,14 +153,18 @@ int stringCompare(String *string1, String *string2){
   length1 = strlen(string1->text->string);
   length2 = strlen(string2->text->string);
   
-  if(length1 == length2){
-    for(i=0;i<length1;i++){
-        if(string1->text->string[i] != string2->text->string[i])
-          return 0;
-    }
-  return 1;
-  }
-  else return 0;
+  if(strcmp(string1->text->string, string2->text->string) == 0)return 0;
+	else if(strcmp(string1->text->string, string2->text->string) > 0) return 1;
+	else if(strcmp(string1->text->string, string2->text->string) < 0) return -1;
+  
+  // if(length1 == length2){
+    // for(i=0;i<length1;i++){
+        // if(string1->text->string[i] != string2->text->string[i])
+          // return 1;
+    // }
+  // return 0;
+  // }
+  // else return 1;
 }
 /**
 * Function  : remove the word in the string that not contain in the delimiter(stringRemoveWordNotContaining)
