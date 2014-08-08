@@ -11,7 +11,11 @@
 #include "AVL.h"
 #include "Rotation.h"
 
-
+/**
+* Function  : Add Definition for the test with the name and its content (addDefinition)
+* Input     : the Definition Name and the Definition content
+* Return    : return the name and content for the new Definition
+*/
 Definition *addDefinition(String *name, String *content){
 	Definition *define = malloc(sizeof(Definition));
 	
@@ -20,7 +24,11 @@ Definition *addDefinition(String *name, String *content){
 	
 	return define;
 }
-
+/**
+* Function  : Checking for the String weather it is a Preprocessor with #define or doesn't(isPreprocessors)
+* Input     : The text to be tested for its Preprocessor availability
+* Return    : if the text is a Preprocessor return 1, else Throw ERROR
+*/
 int isPreprocessors(Text *hash){
   Text *define = textNew("#define");
 	if(strcmp(hash->string,define->string)==0)
@@ -38,12 +46,17 @@ Text *textClone(Text *text){
 	return clonetxt;
 }
 
-/**
+/**   EXAMPLE
   //  2+3*MIN-6/8
   //  0123456789
   //  0 ~ 3 store to temp + 3 (7 ~ 10 store to another)
+  //  2+3*(3-4)-6/8
   */
-  
+/**
+* Function  : substitute the text for the replacement of the text with the subText(textSubstitute)
+* Input     : The main text, and its relativeStrart and length for the SubText
+* Return    : return the Text after substitute with the subText
+*/
 Text *textSubstitute(Text *text, int relativeStart, int length, Text *subText){
   Text *Temp;
   int txtLength, subLength, returnLength ,storedLength;

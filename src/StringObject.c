@@ -4,7 +4,11 @@
 #include <string.h>
 #include "Text.h"
 #include "CharSet.h"
-
+/**
+* Function  : Create a New String Object (stringNew)
+* Input     : Text to create the String Object
+* Return    : The new String with its start, length and reference
+*/
 String *stringNew(Text *text){
 
 	String *newString = malloc(sizeof(String));
@@ -16,12 +20,20 @@ String *stringNew(Text *text){
 	
 	return newString;
 }
-
+/**
+* Function  : Assign the String with reference increment (stringAssign)
+* Input     : The string of the String Object;
+* Return    : The reference after increment
+*/
 String *stringAssign(String *string){
 	string->reference++;
 	return string;
 }
-
+/**
+* Function  : Delete and clear the String Object (stringDelete)
+* Input     : The string of the String Object;
+* Return    : The deleted String Object
+*/
 String *stringDelete(String *textString){
 
   String *deletedString;
@@ -31,7 +43,11 @@ String *stringDelete(String *textString){
   
   return deletedString;
 }
-
+/**
+* Function  : decrement the reference and free the String Object (stringDel)
+* Input     : The string of the String Object;
+* Return    : The deleted String Object
+*/
 String *stringDel(String *string){
 
 	string->reference--;
@@ -42,7 +58,11 @@ String *stringDel(String *string){
 	}
 	return string;
 }
-
+/**
+* Function  : Clone the String Object to the another String Object (stringClone)
+* Input     : The string of the String Object;
+* Return    : The Cloned new String Object
+*/
 String *stringClone(String *str){
 
   // char *newString = malloc(sizeof(strlen(str->text->string+1)));
@@ -56,7 +76,11 @@ String *stringClone(String *str){
   
   return rString;
 }
-
+/**
+* Function  : Duplicate the String Object to the another String Object (stringDuplicate)
+* Input     : The string of the String Object;
+* Return    : The duplicated new String Object
+*/
 String *stringDuplicate(String *str){
   
   String *newString = malloc(sizeof(String));
@@ -68,7 +92,11 @@ String *stringDuplicate(String *str){
 	
 	return newString;
 }
-
+/**
+* Function  : trim the string to the left by increment its start and decrement its length (stringLeftTrim)
+* Input     : The string of the String Object;
+* Return    : The trimmed String Object to the Left
+*/
 void stringLeftTrim(String *string){
   
   int i = string->start;
@@ -82,7 +110,11 @@ void stringLeftTrim(String *string){
     else break;
   }
 }
-
+/**
+* Function  : trim the string to the left by decrement its length (stringRightTrim)
+* Input     : The string of the String Object;
+* Return    : The trimmed String Object to the Right
+*/
 void stringRightTrim(String *string){
   
   int i = string->start;
@@ -99,12 +131,20 @@ void stringRightTrim(String *string){
 			break;
 	}
 }
-
+/**
+* Function  : trim the string to the left and right (stringTrim)
+* Input     : The string of the String Object;
+* Return    : The trimmed String Object
+*/
 void stringTrim(String *string){
 	stringLeftTrim(string);
 	stringRightTrim(string);
 }
-
+/**
+* Function  : Compare the String and return for the similarity(stringCompare)
+* Input     : Two different String Object to be compare
+* Return    : if same return 1, else return 0 if not the same
+*/
 int stringCompare(String *string1, String *string2){
   int i;
   int length1,length2;
@@ -122,7 +162,11 @@ int stringCompare(String *string1, String *string2){
   }
   else return 0;
 }
-
+/**
+* Function  : remove the word in the string that not contain in the delimiter(stringRemoveWordNotContaining)
+* Input     : String to be removed the word, and the set of character that should not be remove
+* Return    : The String that removed from the String Object
+*/
 String *stringRemoveWordNotContaining(String *str,char delimiter[]){
 	int i,j,count;
   int delimiterLength;
@@ -153,7 +197,11 @@ String *stringRemoveWordNotContaining(String *str,char delimiter[]){
 	}
 	return strReturn;
 }
-
+/**
+* Function  : remove the word in the string that contain in the delimiter(stringRemoveWordContaining)
+* Input     : String to be removed the word, and the set of character that should be remove
+* Return    : The String that removed from the String Object
+*/
 String *stringRemoveWordContaining(String *str, char containSet[]){
 	int i,j,count;
   int containLength;
@@ -181,7 +229,11 @@ String *stringRemoveWordContaining(String *str, char containSet[]){
 	}
 	return strReturn;
 }
-
+/**
+* Function  : Find the identifier in the String Object and return the identifier(findIdentifier)
+* Input     : The string of the String Object;
+* Return    : The identifier that Found in the String
+*/
 String *findIdentifier(String *str){
   String *str2;
   String *iden;
