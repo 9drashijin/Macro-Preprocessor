@@ -3,11 +3,11 @@
 
 #include "AVL.h"
 #include "StringObject.h"
-#include "Definition.h"
 #include "Text.h"
 
 
 typedef struct NodeString NodeString;
+typedef struct DefinitionTable DefinitionTable;
 
 struct NodeString{
 	int balance;
@@ -15,8 +15,6 @@ struct NodeString{
   NodeString *rightChild;
 	char *string;
 };
-
-typedef struct DefinitionTable DefinitionTable;
 
 struct DefinitionTable{
   int balance;

@@ -308,22 +308,46 @@ void test_stringRemoveWordContaining_should_remove_the_word_with_static_text(voi
 	TEST_ASSERT_EQUAL(0x80000000,text->reference);
 }
 
-void test_findIdentifier_should_find_the_identifier_and_return(void){
+void test_findIdentifier_should_find_the_identifier_and_return_the_start_and_length(void){
 	Text *text = textNew("1+2*MAX-6/8");
-  Text *subText = textNew("(10*11)");
 	String *str = stringNew(text);
-  
-  // Text *returnedText;
-  // returnedText = textSubstitute(text,4,3,subText);
   
   String *iden = findIdentifier(str);
   
 	TEST_ASSERT_EQUAL_STRING("1+2*MAX-6/8",str->text->string);
+  TEST_ASSERT_EQUAL(0,str->start);
+	TEST_ASSERT_EQUAL(11,str->length);
   
-  // printf("str: %s\n",str->text->string);
-  // printf("iden: %s\n",iden->text->string);
-  // printf("iden: %s\n",iden->start);
-  // printf("iden: %s\n",iden->length);
+  TEST_ASSERT_EQUAL_STRING("1+2*MAX-6/8",iden->text->string);
+  TEST_ASSERT_EQUAL(4,iden->start);
+	TEST_ASSERT_EQUAL(3,iden->length);
+}
+
+void test_findIdentifier_should_find_the_identifier_and_return_the_start_and_length_case2_front(void){
+	Text *text = textNew("MAX+5*8");
+	String *str = stringNew(text);
   
-  // printf("iden: %s\n",str->start);
+  String *iden = findIdentifier(str);
+  
+	TEST_ASSERT_EQUAL_STRING("MAX+5*8",str->text->string);
+  TEST_ASSERT_EQUAL(0,str->start);
+	TEST_ASSERT_EQUAL(7,str->length);
+  
+  TEST_ASSERT_EQUAL_STRING("MAX+5*8",iden->text->string);
+  TEST_ASSERT_EQUAL(0,iden->start);
+	TEST_ASSERT_EQUAL(3,iden->length);
+}
+void test_findIdentifier_should_find_the_identifier_and_return_the_start_and_length_case3_behind(void){
+	Text *text = textNew("5*8+MEGA");
+	String *str = stringNew(text);
+  
+  String *iden = findIdentifier(str);
+  
+	TEST_ASSERT_EQUAL_STRING("5*8+MEGA",str->text->string);
+  TEST_ASSERT_EQUAL(0,str->start);
+	TEST_ASSERT_EQUAL(8,str->length);
+  
+  TEST_ASSERT_EQUAL_STRING("5*8+MEGA",iden->text->string);
+  TEST_ASSERT_EQUAL(4,iden->start);
+	TEST_ASSERT_EQUAL(4,iden->length);
 }

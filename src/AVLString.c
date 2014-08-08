@@ -2,7 +2,6 @@
 #include <String.h>
 #include "AVL.h"
 #include "StringObject.h"
-#include "Definition.h"
 #include "Text.h"
 
 int compareString(void *nodeInTree, void *nodeToCompare){

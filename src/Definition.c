@@ -7,6 +7,9 @@
 #include "StringObject.h"
 #include "Text.h"
 #include "CharSet.h"
+#include "AVLString.h"
+#include "AVL.h"
+#include "Rotation.h"
 
 
 Definition *addDefinition(String *name, String *content){
@@ -83,5 +86,18 @@ void strCpy(char *dest, char *src, int start, int length){
     dest[j] = src[i];
   }
   dest[j] = 0;
-  
 }
+
+Definition *definitionFind(DefinitionTable tbl, String *name){}
+void DefinitionAdd(DefinitionTable *tbl, Definition *definition){}
+
+
+
+
+
+
+
+
+
+
+
