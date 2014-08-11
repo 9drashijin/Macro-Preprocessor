@@ -37,6 +37,11 @@ int isPreprocessors(Text *hash){
 		Throw(ERROR_NOT_DEFINE);
 }
 
+/**
+* Function  : Clone the Text to the another text destination (textClone)
+* Input     : The text to be clone;
+* Return    : The Cloned new text
+*/
 Text *textClone(Text *text){
   Text *clonetxt = malloc(strlen(text->string)+4+1);
   
@@ -101,10 +106,25 @@ void strCpy(char *dest, char *src, int start, int length){
   dest[j] = 0;
 }
 
-Definition *DefinitionFind(DefinitionTable *tbl, String *name){}
-void DefinitionAdd(DefinitionTable *tbl, Definition *definition){}
+Definition *DefinitionFind(DefinitionTable *tbl, String *name){} //macro
+void DefinitionAdd(DefinitionTable *tbl, Definition *definition){} //macro
 
+//MAX->MIN->ULTRA->MAX
+//max min123
+//min ultra123
+//ultra max123
+int cyclicCheck(Definition *define1, Definition *define2){
+  if(strcmp(define1->content->text->string,define2->name->text->string)==strcmp(define1->name->text->string,define2->content->text->string))
+		Throw(ERROR_CYCLIC_OCCUR);
+	else
+		return 1;
+}
 
+/**
+* Function  : compare the node is Equal or not and return for the similarity(compareDefinition)
+* Input     : two different node to compare
+* Return    : if same return 0, if bigger than 0 return 1, if smaller than 0 return -1
+*/
 int compareDefinition(void *nodeInTree, void *stringToCompare){
 	DefinitionTable *node1 = (DefinitionTable *)nodeInTree;
   DefinitionTable *node2 = (DefinitionTable *)stringToCompare;
@@ -121,9 +141,6 @@ int compareDefinition(void *nodeInTree, void *stringToCompare){
   
 }
 //AVLDefTable -> Definition -> String -> Text ->char string
-
-
-
 
 
 

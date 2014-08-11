@@ -325,7 +325,7 @@ void test_findIdentifier_should_find_the_identifier_and_return_the_start_and_len
 	TEST_ASSERT_EQUAL(3,iden->length);
 }
 
-void test_findIdentifier_should_find_the_identifier_and_return_the_start_and_length_case2_front(void){
+void test_findIdentifier_should_find_the_identifier_and_return_the_start_and_length_case2_with_front_text(void){
 	Text *text = textNew("MAX+5*8");
 	String *str = stringNew(text);
   
@@ -339,7 +339,7 @@ void test_findIdentifier_should_find_the_identifier_and_return_the_start_and_len
   TEST_ASSERT_EQUAL(0,iden->start);
 	TEST_ASSERT_EQUAL(3,iden->length);
 }
-void test_findIdentifier_should_find_the_identifier_and_return_the_start_and_length_case3_behind(void){
+void test_findIdentifier_should_find_the_identifier_and_return_the_start_and_length_case3_with_behind_text(void){
 	Text *text = textNew("5*8+MEGA");
 	String *str = stringNew(text);
   

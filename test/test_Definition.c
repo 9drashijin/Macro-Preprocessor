@@ -16,19 +16,19 @@
 void setUp(void){}
 void tearDown(void){}
 
+//just for the printing of definition name for checking
 void printName(String *str){
   Definition *define;
-  // define = str;
   
   printf("======name====== \n");
   printf("text %s \n",define->name->text);
   printf("start %d \n",define->name->start);
   printf("length %d \n\n",define->name->length);
 }
+//just for the printing of definition content for checking
 void printContent(String *str){
   Definition *define;
-  // define = str;
-  
+
   printf("=====content===== \n");
   printf("text %s \n",define->content->text);
   printf("start %d \n",define->content->start);
@@ -41,7 +41,7 @@ void test_addDefinition_should_add_the_string_to_the_name_and_the_content(void){
   Text *textContent = textNew("2+B*D-6");
   String *defineName = stringNew(textName);
   String *defineContent = stringNew(textContent);
- 
+  
   define = addDefinition(defineName,defineContent);
   
   // printName(define->name);
@@ -56,7 +56,7 @@ void test_addDefinition_should_add_the_string_to_the_name_and_the_content(void){
 	TEST_ASSERT_EQUAL(7,define->content->length);
 }
 
-void test_addDefinition_should_add_another_string_to_the_name_and_the_content(void){
+void test_addDefinition_should_add_another_string_to_the_name_and_the_content_for_another_test(void){
   Definition *define;
   Text *textName = textNew("MIN");
   Text *textContent = textNew("C&&D|5");
@@ -77,7 +77,7 @@ void test_addDefinition_should_add_another_string_to_the_name_and_the_content(vo
 	TEST_ASSERT_EQUAL(6,define->content->length);
 }
 
-void test_isPreprocessor_should_not_throw_error(){
+void test_isPreprocessor_should_not_throw_error_if_the_text_is_a_preprocessor(){
 	CEXCEPTION_T e;
   Text *define = textNew("#define");
   int result;
@@ -91,7 +91,7 @@ void test_isPreprocessor_should_not_throw_error(){
 	}
 }
 
-void test_isPreprocessor_should_throw_error(){
+void test_isPreprocessor_should_throw_error_if_the_text_is_not_a_preprocessor(){
 	CEXCEPTION_T e;
   Text *define = textNew("#zdefine");
   int result;
@@ -105,7 +105,7 @@ void test_isPreprocessor_should_throw_error(){
 	}
 }
 
-void test_textClone_should_clone_the_text_to_a_new_place(){
+void test_textClone_should_clone_the_text_to_a_new_text_destination(){
   Text *define = textNew("#define");
   Text *clone;
   
@@ -117,7 +117,7 @@ void test_textClone_should_clone_the_text_to_a_new_place(){
   TEST_ASSERT_EQUAL(1,clone->reference);
 }
 
-void test_textSubstitute_should_replace_the_text_with_the_MIN(){
+void test_textSubstitute_should_replace_the_text_with_the_MIN_with_2(){
   Text *text = textNew("2+3*MIN");
   Text *MIN = textNew("(2)");
   Text *txt;
@@ -137,7 +137,7 @@ void test_textSubstitute_should_replace_the_text_with_the_MIN_for_2nd_test(){
   TEST_ASSERT_EQUAL_STRING("10+(5*6)",txt->string);
 }
 
-void test_textSubstitute_should_replace_the_text_with_the_MIN_for_3nd_test(){
+void test_textSubstitute_should_replace_the_text_with_the_A_for_3nd_test(){
   Text *text = textNew("Hello A");
   Text *A = textNew("World");
   Text *txt;
@@ -146,7 +146,7 @@ void test_textSubstitute_should_replace_the_text_with_the_MIN_for_3nd_test(){
   
   TEST_ASSERT_EQUAL_STRING("Hello World",txt->string);
 }
-void test_strCpy(){
+void test_strCpy_for_the_custom_string_copy_for_the_word_behind(){
   char text[100];
   char A[] = "World";
   
@@ -154,6 +154,35 @@ void test_strCpy(){
   
   TEST_ASSERT_EQUAL_STRING("World",text);
 }
+
+void test_cyclicCheck_should_not_throw_error_if_cyclic_not_occur(void){
+  Definition *define, *define2;
+  
+  // Text *textName = textNew("A");
+  // Text *textContent = textNew("3");
+  // String *defineName = stringNew(textName);
+  // String *defineContent = stringNew(textContent);
+  
+  // Text *textName2 = textNew("B");
+  // Text *textContent2 = textNew("2");
+  // String *defineName2 = stringNew(textName2);
+  // String *defineContent2 = stringNew(textContent2);
+  
+  // define = addDefinition(defineName,defineContent);
+  // define2 = addDefinition(defineName2,defineContent2);
+  
+  // CEXCEPTION_T e;
+  // int result;
+	// Try{
+    // result = cyclicCheck(define,define2);
+		// TEST_ASSERT_EQUAL(1,result);
+		// TEST_FAIL_MESSAGE("ERROR_CYCLIC_OCCUR");
+	// }
+	// Catch(e){
+		// TEST_ASSERT_EQUAL(ERROR_CYCLIC_OCCUR,e);
+	// }
+}
+
 void test_textSubstitute_should_replace_the_middle_text_with_the_subText(){
   Text *text = textNew("1+2*MAX-6/8");
   Text *subText = textNew("(3-4)");
@@ -253,7 +282,7 @@ void test_definitionFind_should_find_the_definition_in_the_Definition_table(){
   *             \
   *             ULTRA
   */
-void test_definitionFind_should_find_the_definition_in_the_Definition_table_case2(){
+void test_definitionFind_should_find_the_definition_in_the_Definition_table_case2_with_more_data(){
   DefinitionTable ULTRA = {.data = "ULTRA", .balance = 0, .leftChild = NULL, .rightChild = NULL};
   DefinitionTable MAX = {.data = "MAX", .balance = 0, .leftChild = NULL, .rightChild = NULL};
   DefinitionTable SUPER = {.data = "SUPER", .balance = 0, .leftChild = NULL, .rightChild = &ULTRA};
@@ -279,7 +308,7 @@ void test_definitionFind_should_find_the_definition_in_the_Definition_table_case
   *     /      \
   *   NULL     NULL
   */
-void test_definitonAdd_by_adding_the_Definiton_to_the_definition_table(){
+void test_definitonAdd_by_adding_the_new_MIN_Definiton_to_the_definition_table(){
   Definition *define;
   Text *textName = textNew("MIN");
   Text *textContent = textNew("2+8*6");
@@ -313,7 +342,7 @@ void test_definitonAdd_by_adding_the_Definiton_to_the_definition_table(){
   *     /      \
   *   NULL     MAX 5-7
   */
-void test_definitonAdd_by_adding_the_Definiton_to_the_definition_table_for_2_definition(){
+void test_definitonAdd_by_adding_the_MAX_Definiton_to_the_definition_table_and_should_add_under_MIN(){
   Definition *define, *define2;
   Text *textName = textNew("MIN");
   Text *textContent = textNew("2+8*6");

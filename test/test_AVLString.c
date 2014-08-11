@@ -236,6 +236,11 @@ void test_avlFind2_for_the_definition_by_testing_with_AVLString(){
   
   TEST_ASSERT_EQUAL(&Emilia,rootFind);
 }
+
+/////////////////////////////////////////
+// AVL add and find for DefinitionTable//
+/////////////////////////////////////////
+
 /**
   *         "MIN" (1)
   *        /    \
