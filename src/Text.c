@@ -9,7 +9,8 @@
 * Output    : text 
 */
 Text *textNew(char *str){
-	Text *text = (Text *)malloc((strlen(str)+1)*4); // 4 byte for the reference, 1 for the last '\0'
+	Text *text = (Text *)malloc((strlen(str)+1)*4);// 4 byte for the reference, 1 for the last '\0'
+	// Text *text = (Text *)malloc(strlen(str)+1+4); 
 	strcpy(text->string,str);
 	text->reference = 1;
 	return text;

@@ -17,10 +17,12 @@ typedef struct Definition{
 }Definition;
 
 #define definitionAdd(tbl, definition) avlAdd((Node *)(tbl) , (Node *)(definition) , compareDefinition)
-#define definitionFind(tbl, name) avlFind2((Node *)(tbl) , (Node *)(name) , compareString)
+#define definitionFind(tbl, name) (DefinitionTable*)avlFind2((Node *)(tbl) , (Node *)(name) , compareString)
 
-#define name(node) ((Text *)((String *)((Definition *)(Node1.data))->name)->text)->string)
-#define content(node) ((Text *)((String *)((Definition *)(Node1.data))->content)->text)->string)
+#define name(node) (((Text *)((String *)((Definition *)(Node1.data))->name)->text)->string)
+#define content(node) (((Text *)((String *)((Definition *)(Node1.data))->content)->text)->string)
+
+
 
 Definition *addDefinition(String *name, String *content);
 int isPreprocessors(Text *hash);

@@ -108,12 +108,21 @@ void DefinitionAdd(DefinitionTable *tbl, Definition *definition){}
 int compareDefinition(void *nodeInTree, void *stringToCompare){
 	DefinitionTable *node1 = (DefinitionTable *)nodeInTree;
   DefinitionTable *node2 = (DefinitionTable *)stringToCompare;
+	// Definition *node2 = (Definition *)stringToCompare;
 	// String *node2 = (String *)stringToCompare;
-
-	if(stringIsEqual(node1->data, node2->data) == 0)return 0;
+  
+  if(stringIsEqual(node1->data, node2->data) == 0)return 0;
 	else if(stringIsEqual(node1->data, node2->data) > 0) return 1;
 	else if(stringIsEqual(node1->data, node2->data) < 0) return -1;
+  
+  // if(node1->data == node2->name )return 0;
+	// else if((Definition *)node1->data > (Definition *)node2->name) return 1;
+	// else if((Definition *)node1->data < (Definition *)node2->name) return -1;
+  
 }
+//AVLDefTable -> Definition -> String -> Text ->char string
+
+
 
 
 
