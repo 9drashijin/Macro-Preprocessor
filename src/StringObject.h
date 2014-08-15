@@ -20,7 +20,7 @@ String *stringDuplicate(String *str);
 
 String *stringRemoveWordNotContaining(String *str,char delimites[]);
 String *stringRemoveWordContaining(String *str, char containSet[]);
-String *findIdentifier(String *str);
+String *findIdentifier(String *str);    //find the identifier for the definition
 
 void stringLeftTrim(String *string);
 void stringRightTrim(String *string);

@@ -31,9 +31,13 @@ Text *textAssign(Text *text){
 * Output    : Text 
 */
 Text *textDelete(Text *text){
+  int i;
 	if(text->reference < 0x80000000 && text->reference > 0){
 		text->reference--;
 		if(text->reference == 0){
+      for(i = 0; i<strlen(text->string) ; i++){
+        text->string[i] = '\0' ;
+        }
 			free(text);
 			return NULL;
 		}		

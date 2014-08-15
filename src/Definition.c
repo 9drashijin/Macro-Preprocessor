@@ -73,7 +73,6 @@ Text *textSubstitute(Text *text, int relativeStart, int length, Text *subText){
   // printf("returnLength: %d \n",returnLength);
   
   Text *Textreturn = textEmptyNew(returnLength);
-
   strncpy(Textreturn->string,text->string,relativeStart);
   
   // printf("string Store front    : %s\n", Textreturn->string);
@@ -87,7 +86,6 @@ Text *textSubstitute(Text *text, int relativeStart, int length, Text *subText){
   cpyLength = txtLength - cpyStart;
   
   strcpy(Temp->string,&text->string[cpyStart]);
-  
   strcat(Textreturn->string,Temp->string);
   
   return Textreturn;
@@ -113,7 +111,14 @@ void DefinitionAdd(DefinitionTable *tbl, Definition *definition){} //macro
 //max min123
 //min ultra123
 //ultra max123
-int cyclicCheck(Definition *define1, Definition *define2){
+
+/**
+* Function  : check for cyclic error if define A content the define B while define B also content define A(cyclicCheck)
+* Input     : two different Definition to check and compare
+* Return    : if there are no error return 1
+*             if error occurs its throw ERROR_CYCLIC_OCCUR
+*/
+int cyclicCheck(Definition *define1, Definition *define2){ //def1 content def2 name == def1 name def2 content
   if(strcmp(define1->content->text->string,define2->name->text->string)==strcmp(define1->name->text->string,define2->content->text->string))
 		Throw(ERROR_CYCLIC_OCCUR);
 	else
@@ -128,19 +133,12 @@ int cyclicCheck(Definition *define1, Definition *define2){
 int compareDefinition(void *nodeInTree, void *stringToCompare){
 	DefinitionTable *node1 = (DefinitionTable *)nodeInTree;
   DefinitionTable *node2 = (DefinitionTable *)stringToCompare;
-	// Definition *node2 = (Definition *)stringToCompare;
-	// String *node2 = (String *)stringToCompare;
   
   if(stringIsEqual(node1->data, node2->data) == 0)return 0;
 	else if(stringIsEqual(node1->data, node2->data) > 0) return 1;
 	else if(stringIsEqual(node1->data, node2->data) < 0) return -1;
-  
-  // if(node1->data == node2->name )return 0;
-	// else if((Definition *)node1->data > (Definition *)node2->name) return 1;
-	// else if((Definition *)node1->data < (Definition *)node2->name) return -1;
-  
 }
-//AVLDefTable -> Definition -> String -> Text ->char string
+//DefinitionTable -> Definition -> String -> Text -> char string
 
 
 

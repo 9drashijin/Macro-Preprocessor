@@ -3,6 +3,7 @@
 #include "AVL.h"
 #include "Rotation.h"
 #include "CustomAssert.h"
+#include "malloc.h"
 
 void setUp(void){}
 void tearDown(void){}
@@ -181,6 +182,7 @@ void test_avlFindString2_for_the_AVLString(){
   
 }
 
+// avlFind ignored , using avlFind2
 void test_avlFind_for_the_definition_by_testing_with_AVLString(){
   DefinitionTable Alice = {.data = "Alice", .balance = 0, .leftChild = NULL, . rightChild = NULL};
 	DefinitionTable Emilia = {.data = "Emilia", .balance = 0, .leftChild = NULL, . rightChild = NULL};
@@ -206,6 +208,7 @@ void test_avlFind_for_the_definition_by_testing_with_AVLString(){
   // TEST_ASSERT_EQUAL(&Emilia,rootFind);
   
 }
+// currently using avlFind2
 /**
   *   "Alice"  1
   *       \   

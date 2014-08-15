@@ -54,6 +54,11 @@ void test_addDefinition_should_add_the_string_to_the_name_and_the_content(void){
   TEST_ASSERT_EQUAL_STRING("2+B*D-6",define->content->text->string);
 	TEST_ASSERT_EQUAL(0,define->content->start);
 	TEST_ASSERT_EQUAL(7,define->content->length);
+  
+  free(textName);
+  free(textContent);
+  free(defineName);
+  free(defineContent);
 }
 
 void test_addDefinition_should_add_another_string_to_the_name_and_the_content_for_another_test(void){
@@ -75,6 +80,11 @@ void test_addDefinition_should_add_another_string_to_the_name_and_the_content_fo
   TEST_ASSERT_EQUAL_STRING("C&&D|5",define->content->text->string);
 	TEST_ASSERT_EQUAL(0,define->content->start);
 	TEST_ASSERT_EQUAL(6,define->content->length);
+  
+  free(textName);
+  free(textContent);
+  free(defineName);
+  free(defineContent);
 }
 
 void test_isPreprocessor_should_not_throw_error_if_the_text_is_a_preprocessor(){
@@ -89,6 +99,8 @@ void test_isPreprocessor_should_not_throw_error_if_the_text_is_a_preprocessor(){
 		TEST_ASSERT_EQUAL(ERROR_NOT_DEFINE,e);
     TEST_FAIL_MESSAGE("ERROR_NOT_DEFINE");
 	}
+  
+  free(define);
 }
 
 void test_isPreprocessor_should_throw_error_if_the_text_is_not_a_preprocessor(){
@@ -115,6 +127,8 @@ void test_textClone_should_clone_the_text_to_a_new_text_destination(){
   TEST_ASSERT_EQUAL_STRING("#define",clone->string);
   TEST_ASSERT_EQUAL(1,define->reference);
   TEST_ASSERT_EQUAL(1,clone->reference);
+  
+  free(define);
 }
 
 void test_textSubstitute_should_replace_the_text_with_the_MIN_with_2(){
@@ -125,6 +139,9 @@ void test_textSubstitute_should_replace_the_text_with_the_MIN_with_2(){
   txt = textSubstitute(text,4,3,MIN);
   
   TEST_ASSERT_EQUAL_STRING("2+3*(2)",txt->string);
+  
+  free(text);
+  free(MIN);
 }
 
 void test_textSubstitute_should_replace_the_text_with_the_MIN_for_2nd_test(){
@@ -135,6 +152,9 @@ void test_textSubstitute_should_replace_the_text_with_the_MIN_for_2nd_test(){
   txt = textSubstitute(text,3,1,MIN);
   
   TEST_ASSERT_EQUAL_STRING("10+(5*6)",txt->string);
+  
+  free(text);
+  free(MIN);
 }
 
 void test_textSubstitute_should_replace_the_text_with_the_A_for_3nd_test(){
@@ -145,6 +165,9 @@ void test_textSubstitute_should_replace_the_text_with_the_A_for_3nd_test(){
   txt = textSubstitute(text,6,1,A);
   
   TEST_ASSERT_EQUAL_STRING("Hello World",txt->string);
+  
+  free(text);
+  free(A);
 }
 void test_strCpy_for_the_custom_string_copy_for_the_word_behind(){
   char text[100];
@@ -155,32 +178,82 @@ void test_strCpy_for_the_custom_string_copy_for_the_word_behind(){
   TEST_ASSERT_EQUAL_STRING("World",text);
 }
 
-void test_cyclicCheck_should_not_throw_error_if_cyclic_not_occur(void){
+void test_cyclicCheck_should_not_throw_error_if_cyclic_not_occur(){ //should pass the test.
   Definition *define, *define2;
   
-  // Text *textName = textNew("A");
-  // Text *textContent = textNew("3");
-  // String *defineName = stringNew(textName);
-  // String *defineContent = stringNew(textContent);
+  Text *textName = textNew("A");
+  Text *textContent = textNew("3");
+  String *defineName = stringNew(textName);
+  String *defineContent = stringNew(textContent);
   
-  // Text *textName2 = textNew("B");
-  // Text *textContent2 = textNew("2");
-  // String *defineName2 = stringNew(textName2);
-  // String *defineContent2 = stringNew(textContent2);
+  Text *textName2 = textNew("B");
+  Text *textContent2 = textNew("2");
+  String *defineName2 = stringNew(textName2);
+  String *defineContent2 = stringNew(textContent2);
   
-  // define = addDefinition(defineName,defineContent);
-  // define2 = addDefinition(defineName2,defineContent2);
+  define = addDefinition(defineName,defineContent);
+  define2 = addDefinition(defineName2,defineContent2);
   
-  // CEXCEPTION_T e;
-  // int result;
-	// Try{
-    // result = cyclicCheck(define,define2);
-		// TEST_ASSERT_EQUAL(1,result);
-		// TEST_FAIL_MESSAGE("ERROR_CYCLIC_OCCUR");
-	// }
-	// Catch(e){
-		// TEST_ASSERT_EQUAL(ERROR_CYCLIC_OCCUR,e);
-	// }
+  CEXCEPTION_T e;
+  int result;
+	Try{
+    result = cyclicCheck(define,define2);
+		TEST_ASSERT_EQUAL(1,result);
+	}
+	Catch(e){
+		TEST_ASSERT_EQUAL(ERROR_CYCLIC_OCCUR,e);
+    TEST_FAIL_MESSAGE("ERROR_CYCLIC_OCCUR");
+	}
+  
+  free(textName);
+  free(textContent);
+  free(defineName);
+  free(defineContent);
+  
+  free(textName2);
+  free(textContent2);
+  free(defineName2);
+  free(defineContent2);
+}
+
+void test_cyclicCheck_should_throw_error_if_cyclic_occur(){ //should pass the test.
+  Definition *define, *define2;
+  
+  Text *textName = textNew("A");
+  Text *textContent = textNew("B");
+  String *defineName = stringNew(textName);
+  String *defineContent = stringNew(textContent);
+  
+  Text *textName2 = textNew("B");
+  Text *textContent2 = textNew("A");
+  String *defineName2 = stringNew(textName2);
+  String *defineContent2 = stringNew(textContent2);
+  
+  define = addDefinition(defineName,defineContent);
+  define2 = addDefinition(defineName2,defineContent2);
+  
+  //def1 content def2 name == def1 name def2 content
+  // definition A content B
+  // definition B content A   // cyclic occurs
+  CEXCEPTION_T e;
+  int result;
+	Try{
+    result = cyclicCheck(define,define2);
+    TEST_FAIL_MESSAGE("ERROR_CYCLIC_OCCUR");
+	}
+	Catch(e){
+		TEST_ASSERT_EQUAL(ERROR_CYCLIC_OCCUR,e);
+	}
+  
+  free(textName);
+  free(textContent);
+  free(defineName);
+  free(defineContent);
+  
+  free(textName2);
+  free(textContent2);
+  free(defineName2);
+  free(defineContent2);
 }
 
 void test_textSubstitute_should_replace_the_middle_text_with_the_subText(){
@@ -193,6 +266,9 @@ void test_textSubstitute_should_replace_the_middle_text_with_the_subText(){
   // printf("returnedText : %s \n", returnedText->string);
   
   TEST_ASSERT_EQUAL_STRING("1+2*(3-4)-6/8",returnedText->string);
+  
+  free(text);
+  free(subText);
 }
 void test_textSubstitute_should_replace_the_front_text_with_the_subText(){
   Text *text = textNew("zxcA World");
@@ -202,6 +278,9 @@ void test_textSubstitute_should_replace_the_front_text_with_the_subText(){
   returnedText = textSubstitute(text,3,1,subText);
   // printf("returnedText : %s \n", returnedText->string);
   TEST_ASSERT_EQUAL_STRING("zxcHello World",returnedText->string);
+  
+  free(text);
+  free(subText);
 }
 void test_textSubstitute_should_replace_the_behind_text_with_the_subText(){
   Text *text = textNew("123+SUPER");
@@ -211,6 +290,8 @@ void test_textSubstitute_should_replace_the_behind_text_with_the_subText(){
   returnedText = textSubstitute(text,4,5,subText);
   
   TEST_ASSERT_EQUAL_STRING("123+(10*11)",returnedText->string);
+  
+  free(subText);
 }
 void test_textSubstitute_should_replace_the_text_with_the_Static_subText(){
   Text *text = t"1+2*MAX-6/8";
@@ -222,6 +303,9 @@ void test_textSubstitute_should_replace_the_text_with_the_Static_subText(){
   // printf("returnedText : %s \n", returnedText->string);
   
   TEST_ASSERT_EQUAL_STRING("1+2*(3-4)-6/8",returnedText->string);
+  
+  free(text);
+  free(subText);
 }
 
 void test_textSubstitute_should_replace_the_text_with_the_2_subText(){
@@ -236,23 +320,30 @@ void test_textSubstitute_should_replace_the_text_with_the_2_subText(){
   // printf("returnedText : %s \n", returnedText->string);
   
   TEST_ASSERT_EQUAL_STRING("1+2*(42-12)-6/8",returnedText->string);
-  // free(returnedText);
+  
+  free(text);
+  free(subText);
+  free(subText2);
 }
 void test_textSubstitute_should_replace_the_text_with_multiple_subText(){
   Text *text = t"1+2*MAX-6/8";
-  Text *subText = t"(42-MIN)";
-  Text *subText2 = t"(1+HIGH)";
-  Text *subText3 = t"13";
+  Text *MAX = t"(42-MIN)";
+  Text *MIN = t"(1+HIGH)";
+  Text *HIGH = t"13";
   Text *returnedText;
   
-  // returnedText = textSubstitute(subText2,3,4,subText3);
-  // returnedText = textSubstitute(subText,4,3,returnedText);
-  // returnedText = textSubstitute(text,4,3,returnedText);
+  returnedText = textSubstitute(MIN,3,4,HIGH);
+  returnedText = textSubstitute(MAX,4,3,returnedText);
+  returnedText = textSubstitute(text,4,3,returnedText);
   
   // printf("returnedText : %s \n", returnedText->string);
   
   // TEST_ASSERT_EQUAL_STRING("1+2*(42-(1+13))-6/8",returnedText->string);
-  // free(returnedText);
+  
+  free(text);
+  free(MAX);
+  free(MIN);
+  free(HIGH);
 }
 
 
@@ -335,15 +426,20 @@ void test_definitonAdd_by_adding_the_new_MIN_Definiton_to_the_definition_table()
   TEST_ASSERT_EQUAL(0, MIN.balance);
   
   TEST_ASSERT_EQUAL_AVL_Node(NULL,NULL,0,&MIN);
+  
+  free(textName);
+  free(textContent);
+  free(defineName);
+  free(defineContent);
 }
 /**
   *    name content
   *     MIN 2+8*6 (1)
   *     /      \
-  *   NULL     MAX 5-7
+  *  MAX 5-7    NULL     
   */
 void test_definitonAdd_by_adding_the_MAX_Definiton_to_the_definition_table_and_should_add_under_MIN(){
-  Definition *define, *define2;
+  Definition *defineMIN, *defineMAX;
   Text *textName = textNew("MIN");
   Text *textContent = textNew("2+8*6");
   String *defineName = stringNew(textName);
@@ -354,11 +450,11 @@ void test_definitonAdd_by_adding_the_MAX_Definiton_to_the_definition_table_and_s
   String *defineName2 = stringNew(textName2);
   String *defineContent2 = stringNew(textContent2);
   
-  define = addDefinition(defineName,defineContent);
-  define2 = addDefinition(defineName2,defineContent2);
+  defineMIN = addDefinition(defineName,defineContent);
+  defineMAX = addDefinition(defineName2,defineContent2);
   
-  DefinitionTable MIN = {.data = define, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  DefinitionTable MAX = {.data = define2, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  DefinitionTable MIN = {.data = defineMIN->name, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  DefinitionTable MAX = {.data = defineMAX->name, .balance = 0, .leftChild = NULL, .rightChild = NULL};
   
 	DefinitionTable *root = NULL;
   DefinitionTable *rootFind = NULL;
@@ -367,13 +463,23 @@ void test_definitonAdd_by_adding_the_MAX_Definiton_to_the_definition_table_and_s
   root = (DefinitionTable *) definitionAdd(root,&MAX);
 	
 	TEST_ASSERT_EQUAL_PTR(&MIN, root);
-	TEST_ASSERT_EQUAL_PTR(NULL, MIN.leftChild);
-	TEST_ASSERT_EQUAL_PTR(&MAX, MIN.rightChild);
+	TEST_ASSERT_EQUAL_PTR(&MAX, MIN.leftChild); //max smaller than min
+	TEST_ASSERT_EQUAL_PTR(NULL, MIN.rightChild);
   
-  TEST_ASSERT_EQUAL(1, MIN.balance);
+  TEST_ASSERT_EQUAL(-1, MIN.balance);
   
-  TEST_ASSERT_EQUAL_AVL_Node(NULL,&MAX,1,&MIN);
+  TEST_ASSERT_EQUAL_AVL_Node(&MAX,NULL,-1,&MIN);
   TEST_ASSERT_EQUAL_AVL_Node(NULL,NULL,0,&MAX);
+  
+  free(textName);
+  free(textContent);
+  free(defineName);
+  free(defineContent);
+  
+  free(textName2);
+  free(textContent2);
+  free(defineName2);
+  free(defineContent2);
 }
 /**
   *       name content
@@ -428,6 +534,21 @@ void test_definitonAdd_by_adding_the_Definiton_to_the_definition_table_for_3_def
   TEST_ASSERT_EQUAL_AVL_Node(&MAX,&SUPER,0,&MIN);
   TEST_ASSERT_EQUAL_AVL_Node(NULL,NULL,0,&MAX);
   TEST_ASSERT_EQUAL_AVL_Node(NULL,NULL,0,&SUPER);
+  
+  free(textName);
+  free(textContent);
+  free(defineName);
+  free(defineContent);
+  
+  free(textName2);
+  free(textContent2);
+  free(defineName2);
+  free(defineContent2);
+  
+  free(textName3);
+  free(textContent3);
+  free(defineName3);
+  free(defineContent3);
 }
 /**
   *        name content
@@ -477,11 +598,17 @@ void test_definitonAdd_by_adding_the_Definiton_to_the_definition_table_for_4_def
   root = (DefinitionTable *) definitionAdd(root,&SUPER);
   root = (DefinitionTable *) definitionAdd(root,&ULTRA);
 	
+  // printing for checking 
+  
   // printf("MIN %p\n",&MIN);
 	// printf("MAX %p\n",&MAX);
 	// printf("SUPER %p\n",&SUPER);
 	// printf("ULTRA %p\n",&ULTRA);
-	
+  
+  ///////////////////////////////////////////////////////
+  //  Test for comparison between MIN,MAX,SUPER,ULTRA  //
+  ///////////////////////////////////////////////////////
+  
   // printf("%d\n", strcmp("MIN","MAX"));
   // printf("%d\n", strcmp("MAX","MIN"));
   // printf("%d\n", strcmp("SUPER","MIN"));
@@ -504,6 +631,26 @@ void test_definitonAdd_by_adding_the_Definiton_to_the_definition_table_for_4_def
   
   rootFind = (DefinitionTable *)definitionFind(root, &MIN);
   TEST_ASSERT_EQUAL(&MIN,rootFind);
+  
+  free(textName);
+  free(textContent);
+  free(defineName);
+  free(defineContent);
+  
+  free(textName2);
+  free(textContent2);
+  free(defineName2);
+  free(defineContent2);
+  
+  free(textName3);
+  free(textContent3);
+  free(defineName3);
+  free(defineContent3);
+  
+  free(textName4);
+  free(textContent4);
+  free(defineName4);
+  free(defineContent4);
 }
 /**
   *         "MIN"
@@ -582,5 +729,34 @@ void test_definitonAdd_by_adding_the_Definiton_to_the_definition_table_for_6_def
 	TEST_ASSERT_EQUAL_PTR(&HYPER, MAX.leftChild);
 	TEST_ASSERT_EQUAL_PTR(&SUPER, ULTIMATE.leftChild);
 	TEST_ASSERT_EQUAL_PTR(&ULTRA, ULTIMATE.rightChild);
-
+  
+  free(textName);
+  free(textContent);
+  free(defineName);
+  free(defineContent);
+  
+  free(textName2);
+  free(textContent2);
+  free(defineName2);
+  free(defineContent2);
+  
+  free(textName3);
+  free(textContent3);
+  free(defineName3);
+  free(defineContent3);
+  
+  free(textName4);
+  free(textContent4);
+  free(defineName4);
+  free(defineContent4);
+  
+  free(textName5);
+  free(textContent5);
+  free(defineName5);
+  free(defineContent5);
+  
+  free(textName6);
+  free(textContent6);
+  free(defineName6);
+  free(defineContent6);
 }

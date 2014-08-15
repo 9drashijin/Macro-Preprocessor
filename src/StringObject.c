@@ -244,32 +244,9 @@ String *findIdentifier(String *str){
   String *temp;
 
   str2  = stringClone(str);
-  // str2  = stringDuplicate(str);
-  
   temp = stringRemoveWordNotContaining(str2,alphabetSet); //alphabetSet
-  // printf("temp: %s\n",temp->text->string);
-  // printf("temp: %d\n",temp->start);
-  // printf("temp: %d\n",temp->length);
-  // printf("str2: %s\n",str2->text->string);
-  // printf("str2: %d\n",str2->start);
-  // printf("str2: %d\n",str2->length);
   stringDel(temp);
-  // printf("temp after: %s\n",temp->text->string);
-  // printf("temp after: %d\n",temp->start);
-  // printf("temp after: %d\n",temp->length);
   iden = stringRemoveWordContaining(str2,alphaNumericSet); //alphaNumericSet
-  // printf("iden: %s\n",iden->text->string);
-  // printf("iden: %d\n",iden->start);
-  // printf("iden: %d\n",iden->length);
   
   return iden;
-  
-  ////////////////////
-  //  Shorter Code  //
-  ////////////////////
-  // String *str2nd = stringClone(str);
-  // String *remove = stringRemoveWordNotContaining(str2nd,alphabetSet);
-  // stringDel(remove);
-  // String *iden = stringRemoveWordContaining(str2nd,alphaNumericSet);
-  // return iden;
 }

@@ -31,9 +31,10 @@ struct DefinitionTable{
 #define avlFindDef(root, elementToFind) (DefinitionTable*)avlFind((Node *)(root) , (Node *)(elementToFind) , compareString)
 #define avlFindDef2(root, elementToFind) (DefinitionTable*)avlFind2((Node *)(root) , (Node *)(elementToFind) , compareString)
 
-int compareString(void *nodeInTree, void *nodeToCompare);
-Node *avlFind(Node **root, void *elementToFind, int(*compare)(void *,void *));
-Node *avlFind2(Node *root, void *elementToFind, int(*compare)(void *,void *)); //without pointer to pointer root
 
+int compareString(void *nodeInTree, void *nodeToCompare);
+Node *avlFind(Node **root, void *elementToFind, int(*compare)(void *,void *));  
+Node *avlFind2(Node *root, void *elementToFind, int(*compare)(void *,void *)); //without pointer to pointer root  
+//using avlFind2
 
 #endif // AVLString_H
