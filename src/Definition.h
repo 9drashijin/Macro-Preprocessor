@@ -30,6 +30,7 @@ Text *textClone(Text *text);
 Text *textSubstitute(Text *text, int relativeStart, int length, Text *subText);
 void strCpy(char *dest, char *src, int start, int length); //custom stringCopy for word at behind
 int cyclicCheck(Definition *define1, Definition *define2);
+int cyclicCheck2(Definition *define1, Definition *define2, Definition *define3);
 
 Definition *DefinitionFind(DefinitionTable *tbl, String *name);
 void DefinitionAdd(DefinitionTable *tbl, Definition *definition);

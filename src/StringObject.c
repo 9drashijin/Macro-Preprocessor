@@ -12,12 +12,12 @@
 String *stringNew(Text *text){
 
 	String *newString = malloc(sizeof(String));
-	
+
 	newString->text = textAssign(text);
   newString->reference = 1;
 	newString->start = 0;
 	newString->length = strlen(text->string);
-	
+
 	return newString;
 }
 /**
@@ -40,7 +40,7 @@ String *stringDelete(String *textString){
   deletedString->text = textDelete(textString->text);
   deletedString->start = 0;
   deletedString->length = 0;
-  
+
   return deletedString;
 }
 /**
@@ -68,12 +68,12 @@ String *stringClone(String *str){
   // char *newString = malloc(sizeof(strlen(str->text->string+1)));
   char *newString = malloc(sizeof(String));
   String *rString = malloc(sizeof(String));
-  
+
   strcpy(newString,str->text->string);
   rString->text = textNew(newString);
   rString->start = str->start;
   rString->length = str->length;
-  
+
   return rString;
 }
 /**
@@ -82,14 +82,14 @@ String *stringClone(String *str){
 * Return    : The duplicated new String Object
 */
 String *stringDuplicate(String *str){
-  
+
   String *newString = malloc(sizeof(String));
   Text *temp = textNew(strdup(str->text->string));
-  
+
 	newString->text = temp;
 	newString->start = str->start;
 	newString->length = str->length;
-	
+
 	return newString;
 }
 /**
@@ -98,10 +98,10 @@ String *stringDuplicate(String *str){
 * Return    : The trimmed String Object to the Left
 */
 void stringLeftTrim(String *string){
-  
+
   int i = string->start;
   int j = strlen(string->text->string);
-  
+
   for(;i<=j;i++){
     if(string->text->string[i] == ' ' || string->text->string[i] == '\t' ){
     string->start++;
@@ -116,12 +116,12 @@ void stringLeftTrim(String *string){
 * Return    : The trimmed String Object to the Right
 */
 void stringRightTrim(String *string){
-  
+
   int i = string->start;
   int j = string->length;
-  
+
   int txt = i + j - 1;
-	
+
 	for(;;txt--){
 		if(j == 0)
 			break;
@@ -149,14 +149,14 @@ int stringIsEqual(String *string1, String *string2){
   int i;
   int length1,length2;
   char rString1, rString2;
-  
+
   length1 = strlen(string1->text->string);
   length2 = strlen(string2->text->string);
-  
+
   if(strcmp(string1->text->string, string2->text->string) == 0)return 0;
 	else if(strcmp(string1->text->string, string2->text->string) > 0) return 1;
 	else if(strcmp(string1->text->string, string2->text->string) < 0) return -1;
-  
+
   // if(length1 == length2){
     // for(i=0;i<length1;i++){
         // if(string1->text->string[i] != string2->text->string[i])
@@ -176,12 +176,12 @@ String *stringRemoveWordNotContaining(String *str,char delimiter[]){
   int delimiterLength;
   int strLength;
 	String *strReturn = stringNew(str->text);
-	
+
 	delimiterLength = strlen(delimiter);
 	strLength = strlen(str->text->string);
 	strReturn->start = str->start;
 	strReturn->length = 0;
-	
+
 	for(j=str->start ; j<strLength ; j++){
 		for(i=0,count=0 ; i<delimiterLength ; i++){
 			if(str->text->string[j] == delimiter[i]){
@@ -215,7 +215,7 @@ String *stringRemoveWordContaining(String *str, char containSet[]){
 	strLength = strlen(str->text->string);
 	strReturn->start = str->start;
 	strReturn->length = 0;
-	
+
 	for(j=str->start ; j<strLength ; j++){
 		for(i=0,count=0 ; i<containLength ; i++){
 			if(str->text->string[j] == containSet[i]){
@@ -247,6 +247,6 @@ String *findIdentifier(String *str){
   temp = stringRemoveWordNotContaining(str2,alphabetSet); //alphabetSet
   stringDel(temp);
   iden = stringRemoveWordContaining(str2,alphaNumericSet); //alphaNumericSet
-  
+
   return iden;
 }

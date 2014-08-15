@@ -6,11 +6,11 @@
 /**
 * Function  : Create a new Text (textNew)
 * Input     : String to create
-* Output    : text 
+* Output    : text
 */
 Text *textNew(char *str){
 	Text *text = (Text *)malloc((strlen(str)+1)*4);// 4 byte for the reference, 1 for the last '\0'
-	// Text *text = (Text *)malloc(strlen(str)+1+4); 
+	// Text *text = (Text *)malloc(strlen(str)+1+4);
 	strcpy(text->string,str);
 	text->reference = 1;
 	return text;
@@ -18,7 +18,7 @@ Text *textNew(char *str){
 /**
 * Function  : Assign the text with the reference (textAssign)
 * Input     : Text
-* Output    : Text 
+* Output    : Text
 */
 Text *textAssign(Text *text){
 	if(text->reference < 0x80000000)
@@ -28,7 +28,7 @@ Text *textAssign(Text *text){
 /**
 * Function  : Delete the Text (textDelete)
 * Input     : Text
-* Output    : Text 
+* Output    : Text
 */
 Text *textDelete(Text *text){
   int i;
@@ -40,7 +40,7 @@ Text *textDelete(Text *text){
         }
 			free(text);
 			return NULL;
-		}		
+		}
 	}
 	return text;
 }
@@ -55,11 +55,11 @@ int textLength(Text *text){
 /**
 * Function  : Create a new Empty Text (textNew)
 * Input     : String to create
-* Output    : text 
+* Output    : text
 */
 Text *textEmptyNew(int length){
   Text *text = malloc(sizeof(int)*(length)+4+2);  // 4 byte for the reference, 1 for the last '\0'
-  
+
   text->reference = 1;
   return text;
 }
