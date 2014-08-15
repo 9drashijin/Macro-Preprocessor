@@ -238,7 +238,7 @@ void test_stringIsEqual_should_compare_and_return_0_if_both_are_not_the_same(voi
   int compare;
 
 	compare = stringIsEqual(str,str2);
-	// TEST_ASSERT_EQUAL(-1,compare);
+	TEST_ASSERT_EQUAL(-1,compare);
 
   free(text);
   free(text1);
