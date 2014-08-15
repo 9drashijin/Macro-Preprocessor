@@ -178,6 +178,11 @@ void test_strCpy_for_the_custom_string_copy_for_the_word_behind(){
   TEST_ASSERT_EQUAL_STRING("World",text);
 }
 
+/**
+  *      #define A 3
+  *      #define B 2      (A) --> (B) no cyclic
+  *
+  */
 void test_cyclicCheck_should_not_throw_error_if_cyclic_not_occur(){ //should pass the test.
   Definition *define, *define2;
 
@@ -232,7 +237,6 @@ void test_cyclicCheck_should_throw_error_if_cyclic_occur(){ //should pass the te
   define = addDefinition(defineName,defineContent);
   define2 = addDefinition(defineName2,defineContent2);
 
-  //def1 content def2 name == def1 name def2 content
   // definition A content B
   // definition B content A   // cyclic occurs
   CEXCEPTION_T e;
@@ -255,7 +259,11 @@ void test_cyclicCheck_should_throw_error_if_cyclic_occur(){ //should pass the te
   free(defineName2);
   free(defineContent2);
 }
-
+/**                           _ _ _ _ _ _ _ _
+  *      #define A B        /               ^
+  *      #define B C       V                |
+  *      #define C A      (A) --> (B) --> (C)     Cyclic occur C is depend on A
+  */
 void test_cyclicCheck_should_throw_error_if_cyclic_occur_for_multiple_define(){ //should pass the test.
   Definition *define, *define2 , *define3;
 
@@ -396,7 +404,37 @@ void test_textSubstitute_should_replace_the_text_with_multiple_subText(){
   free(MIN);
   free(HIGH);
 }
+/*
+*    Just for the Opening of Program Test (please Ignore it)
+*/
+void xtest_testSubstitude_should_substitude_the_subtext_for_the_macro_preprocessor(){
+  Text *Hello = textNew("Hello World !");
+  Text *World = textNew("this is a program");
+  Text *Macro = textNew("Macro define");
+  Text *Preprocessor = textNew("Preprocessor");
+  Text *returnedText;
 
+  printf("=====================================================================\n");
+  printf("==                        Macro Preprocessor                       ==\n");
+  printf("=====================================================================\n");
+  printf("#define define Preprocessor   : %s \n", Preprocessor->string);
+  printf("#define program define        : %s \n", Macro->string);
+  printf("#define World program         : %s \n", World->string);
+  printf("#define returnedText World    : %s \n=====================================================================\n", Hello->string);
+
+  printf("define                        : %s \n", Preprocessor->string);
+  returnedText = textSubstitute(Macro,6,6,Preprocessor);
+  printf("Macro define                  : %s \n", returnedText->string);
+
+  returnedText = textSubstitute(World,10,7,returnedText);
+  printf("this is a program             : %s \n", returnedText->string);
+
+  returnedText = textSubstitute(Hello,6,5,returnedText);
+  printf("Hello World !                 : %s \n", returnedText->string);
+  printf("=====================================================================\n");
+
+  TEST_ASSERT_EQUAL_STRING("Hello this is a Macro Preprocessor !",returnedText->string);
+}
 
 /////////////////////
 // Definition Find //
@@ -810,4 +848,80 @@ void test_definitonAdd_by_adding_the_Definiton_to_the_definition_table_for_6_def
   free(textContent6);
   free(defineName6);
   free(defineContent6);
+}
+
+//Test For ALl
+
+void test_all_for_3_definition_with_text_substitution_and_should_throw_error_if_cyclic_occurs(){
+  Definition *define, *define2 , *define3;
+
+  Text *textName = textNew("A");
+  Text *textContent = textNew("Ali B Ahmad");
+  String *defineName = stringNew(textName);
+  String *defineContent = stringNew(textContent);
+
+  Text *textName2 = textNew("B");
+  Text *textContent2 = textNew("Bin C Abdul");
+  String *defineName2 = stringNew(textName2);
+  String *defineContent2 = stringNew(textContent2);
+
+  Text *textName3 = textNew("C");
+  Text *textContent3 = textNew("Check A Trollolo");
+  String *defineName3 = stringNew(textName3);
+  String *defineContent3 = stringNew(textContent3);
+
+  Text *finalText;
+  finalText = textSubstitute(defineContent2->text,4,1,defineContent3->text);
+  finalText = textSubstitute(defineContent->text,4,1,finalText);
+  TEST_ASSERT_EQUAL_STRING("Ali Bin Check A Trollolo Abdul Ahmad",finalText->string);
+
+  define = addDefinition(defineName,defineContent);
+  define2 = addDefinition(defineName2,defineContent2);
+  define3 = addDefinition(defineName3,defineContent3);
+
+  DefinitionTable A = {.data = define->name, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  DefinitionTable B = {.data = define2->name, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  DefinitionTable C = {.data = define3->name, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+
+	DefinitionTable *root = NULL;
+  DefinitionTable *rootFind = NULL;
+
+  root = (DefinitionTable *) definitionAdd(root,&A);
+  root = (DefinitionTable *) definitionAdd(root,&B);
+  root = (DefinitionTable *) definitionAdd(root,&C);
+
+  /**
+  *        (B)
+  *       /   \
+  *     (A)   (C)
+  */
+
+  TEST_ASSERT_EQUAL_AVL_Node(&A,&C,0,&B);
+	TEST_ASSERT_EQUAL_AVL_Node(NULL,NULL,0,&A);
+	TEST_ASSERT_EQUAL_AVL_Node(NULL,NULL,0,&C);
+
+  CEXCEPTION_T e;
+  int result;
+	Try{
+    result = cyclicCheck2(define,define2,define3);
+    TEST_FAIL_MESSAGE("ERROR_CYCLIC_OCCUR");
+	}
+	Catch(e){
+		TEST_ASSERT_EQUAL(ERROR_CYCLIC_OCCUR,e);
+	}
+
+  free(textName);
+  free(textContent);
+  free(defineName);
+  free(defineContent);
+
+  free(textName2);
+  free(textContent2);
+  free(defineName2);
+  free(defineContent2);
+
+  free(textName3);
+  free(textContent3);
+  free(defineName3);
+  free(defineContent3);
 }

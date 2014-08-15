@@ -9,7 +9,6 @@
 #include "Rotation.h"
 
 
-
 typedef struct Definition{
 	TokenType type;
 	String *name;
@@ -25,7 +24,6 @@ typedef struct Definition{
 
 Definition *addDefinition(String *name, String *content);
 int isPreprocessors(Text *hash);
-void defineTest(String *define);
 Text *textClone(Text *text);
 Text *textSubstitute(Text *text, int relativeStart, int length, Text *subText);
 void strCpy(char *dest, char *src, int start, int length); //custom stringCopy for word at behind

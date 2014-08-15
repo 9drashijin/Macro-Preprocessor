@@ -125,7 +125,7 @@ int cyclicCheck(Definition *define1, Definition *define2){ //def1 content def2 n
 		return 1;
 }
 
-int cyclicCheck2(Definition *define1, Definition *define2, Definition *define3){ //def1 content def2 name == def1 name def2 content
+int cyclicCheck2(Definition *define1, Definition *define2, Definition *define3){ //def1 content def2 name == def1 name def2 content == def2 content def3 name == def2 name def3 content
   if((strcmp(define1->content->text->string,define2->name->text->string)==strcmp(define1->name->text->string,define2->content->text->string))==(strcmp(define2->content->text->string,define3->name->text->string)==strcmp(define2->name->text->string,define3->content->text->string)))
 		Throw(ERROR_CYCLIC_OCCUR);
 	else
@@ -146,8 +146,6 @@ int compareDefinition(void *nodeInTree, void *stringToCompare){
 	else if(stringIsEqual(node1->data, node2->data) < 0) return -1;
 }
 //DefinitionTable -> Definition -> String -> Text -> char string
-
-
 
 
 
