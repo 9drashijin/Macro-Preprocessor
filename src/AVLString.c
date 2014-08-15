@@ -22,21 +22,21 @@ int compareString(void *nodeInTree, void *nodeToCompare){
 * Input     : the root of tree and the element to Find in the tree
 * Return    : element To find (found)
 */
-Node *avlFind(Node **root, void *elementToFind, int(*compare)(void *,void *)){
-  Node *temp = NULL;
-  Node *rootFind = *root;
+// Node *avlFind(Node **root, void *elementToFind, int(*compare)(void *,void *)){
+  // Node *temp = NULL;
+  // Node *rootFind = *root;
 
-  if(*root == NULL || elementToFind == NULL) return NULL;
-  else{
-  int compareResult = compare(*root,elementToFind);
+  // if(*root == NULL || elementToFind == NULL) return NULL;
+  // else{
+  // int compareResult = compare(*root,elementToFind);
 
-  if(compareResult == 0){ temp = *root;}
-  else if(compareResult == -1){temp = avlFind(&rootFind->rightChild,elementToFind,compare);}
-  else if(compareResult == 1){temp = avlFind(&rootFind->leftChild,elementToFind,compare);}
-  return temp;
+  // if(compareResult == 0){ temp = *root;}
+  // else if(compareResult == -1){temp = avlFind(&rootFind->rightChild,elementToFind,compare);}
+  // else if(compareResult == 1){temp = avlFind(&rootFind->leftChild,elementToFind,compare);}
+  // return temp;
 
-  }
-}
+  // }
+// }
 /**
 * Function  : AVL Find for the node in the AVL tree (avlFind2)
 * Input     : the root of tree and the element to Find in the tree

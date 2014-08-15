@@ -126,37 +126,13 @@ void test_avlAddInt_for_4th_element(){
 ///////////////////////////////////////////
 //             AVL Find                  //
 ///////////////////////////////////////////
-
-void test_avlFindString_for_the_AVLString(){
-  NodeString Alice = {.string = "Alice", .balance = 0, .leftChild = NULL, . rightChild = NULL};
-	NodeString Emilia = {.string = "Emilia", .balance = 0, .leftChild = NULL, . rightChild = NULL};
-	NodeString *root = NULL;
-	NodeString *rootFind = NULL;
-
-  root = (NodeString *) avlAddString(root,&Alice);
-	root = (NodeString *) avlAddString(root,&Emilia);
-
-	TEST_ASSERT_EQUAL_PTR(&Alice, root);
-	TEST_ASSERT_EQUAL_PTR(&Emilia, root->rightChild);
-	TEST_ASSERT_EQUAL_PTR(NULL, Emilia.leftChild);
-	TEST_ASSERT_EQUAL_PTR(NULL, Emilia.rightChild);
-
-	TEST_ASSERT_EQUAL(1, Alice.balance);
-	TEST_ASSERT_EQUAL(0, Emilia.balance);
-
-	TEST_ASSERT_EQUAL_AVL_Node(NULL,&Emilia,1,&Alice);
-	TEST_ASSERT_EQUAL_AVL_Node(NULL,NULL,0,&Emilia);
-
-  // rootFind = (NodeString *)avlFindString(&root, &Emilia);
-
-}
 /**
   *   "Alice"  1
   *       \
   *     "Emilia"
   *
   */
-void test_avlFindString2_for_the_AVLString(){
+void test_avlFindString2_for_the_AVLString_with_the_NodeString_AvL(){
   NodeString Alice = {.string = "Alice", .balance = 0, .leftChild = NULL, . rightChild = NULL};
 	NodeString Emilia = {.string = "Emilia", .balance = 0, .leftChild = NULL, . rightChild = NULL};
 	NodeString *root = NULL;
@@ -181,33 +157,6 @@ void test_avlFindString2_for_the_AVLString(){
   TEST_ASSERT_EQUAL(&Emilia,rootFind);
 
 }
-
-// avlFind ignored , using avlFind2
-void test_avlFind_for_the_definition_by_testing_with_AVLString(){
-  DefinitionTable Alice = {.data = "Alice", .balance = 0, .leftChild = NULL, . rightChild = NULL};
-	DefinitionTable Emilia = {.data = "Emilia", .balance = 0, .leftChild = NULL, . rightChild = NULL};
-	DefinitionTable *root = NULL;
-	DefinitionTable *rootFind = NULL;
-
-  root = (DefinitionTable *) avlAddString(root,&Alice);
-	root = (DefinitionTable *) avlAddString(root,&Emilia);
-
-  TEST_ASSERT_EQUAL_PTR(&Alice, root);
-	TEST_ASSERT_EQUAL_PTR(&Emilia, root->rightChild);
-	TEST_ASSERT_EQUAL_PTR(NULL, Emilia.leftChild);
-	TEST_ASSERT_EQUAL_PTR(NULL, Emilia.rightChild);
-
-	TEST_ASSERT_EQUAL(1, Alice.balance);
-	TEST_ASSERT_EQUAL(0, Emilia.balance);
-
-	TEST_ASSERT_EQUAL_AVL_Node(NULL,&Emilia,1,&Alice);
-	TEST_ASSERT_EQUAL_AVL_Node(NULL,NULL,0,&Emilia);
-
-  // rootFind = (DefinitionTable *)avlFindDef(&root, &Emilia);
-
-  // TEST_ASSERT_EQUAL(&Emilia,rootFind);
-
-}
 // currently using avlFind2
 /**
   *   "Alice"  1
@@ -215,7 +164,7 @@ void test_avlFind_for_the_definition_by_testing_with_AVLString(){
   *     "Emilia"
   *
   */
-void test_avlFind2_for_the_definition_by_testing_with_AVLString(){
+void test_avlFind2_for_the_definition_by_testing_with_the_DefinitionTable_avl(){
   DefinitionTable Alice = {.data = "Alice", .balance = 0, .leftChild = NULL, . rightChild = NULL};
 	DefinitionTable Emilia = {.data = "Emilia", .balance = 0, .leftChild = NULL, . rightChild = NULL};
 	DefinitionTable *root = NULL;
@@ -251,7 +200,7 @@ void test_avlFind2_for_the_definition_by_testing_with_AVLString(){
   *               \
   *              "ULTRA" (0)
   */
-void test_avlFind_for_the_definition_with_more_string(){
+void test_avlFind_for_the_definition_with_more_node_in_the_DefinitionTable_avlTree(){
   DefinitionTable MIN = {.data = "#define MIN 5-7", .balance = 0, .leftChild = NULL, . rightChild = NULL};
 	DefinitionTable MAX = {.data = "#define MAX 2+3x4(MIN", .balance = 0, .leftChild = NULL, . rightChild = NULL};
 	DefinitionTable SUPER = {.data = "#define SUPER 2(MAX)", .balance = 0, .leftChild = NULL, . rightChild = NULL};

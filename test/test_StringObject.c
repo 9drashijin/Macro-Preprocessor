@@ -406,7 +406,7 @@ void test_stringRemoveWordContaining_should_remove_the_word_with_static_text(voi
 /////////////////////
 // Find Identifier //
 /////////////////////
-void test_findIdentifier_should_find_the_identifier_and_return_the_start_and_length(void){
+void test_findIdentifier_should_find_the_identifier_and_return_the_start_and_length_for_the_middle_text(void){
 	Text *text = textNew("1+2*MAX-6/8");
 	String *str = stringNew(text);
 
